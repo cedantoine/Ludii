@@ -21,8 +21,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Clone TravisTrials
-      run: git clone --branch=master https://github.com/Ludeme/TravisTrials.git ../TravisTrials
     - name: Build with Ant
       run: |
         cd PlayerDesktop
