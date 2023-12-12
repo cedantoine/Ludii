@@ -24,4 +24,5 @@ jobs:
     - name: Build with Ant
       run: |
         cd PlayerDesktop
+        export ANT_OPTS=-Xmx6g
         ant clean test
