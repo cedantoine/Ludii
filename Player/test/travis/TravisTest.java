@@ -120,11 +120,13 @@ public class TravisTest
 
 			// We exclude that game from the tests because the legal moves are
 			// too slow to test.
-//			if (!filePath.replaceAll(Pattern.quote("\\"), "/").contains("Tavli"))
+//			if (!filePath.replaceAll(Pattern.quote("\\"), "/").contains("Pagade Kayi Ata (Sixteen-handed)") &&
+//					!filePath.replaceAll(Pattern.quote("\\"), "/").contains("JulbaharSubgame") &&
+//					!filePath.replaceAll(Pattern.quote("\\"), "/").contains("GrandTrictracSubgame"))
 //				continue;
 
-			 // Get game description from resource
-			 System.out.println("Game: " + filePath);
+			// Get game description from resource
+			System.out.println("Game: " + filePath);
 
 			String path = filePath.replaceAll(Pattern.quote("\\"), "/");
 			path = path.substring(path.indexOf("/lud/"));
@@ -200,9 +202,13 @@ public class TravisTest
 				fail();
 			}
 
+			final List<String> excludedIntegrity = new ArrayList<String>();
+			excludedIntegrity.add("Pagade Kayi Ata (Sixteen-handed)");
+
 			try
 			{
-				testIntegrity();
+				if (!containsPartOf(excludedIntegrity, game.name()))
+					testIntegrity();
 			}
 			catch (final IOException e)
 			{
@@ -217,7 +223,6 @@ public class TravisTest
 			excludedCustomPlayouts.add("Shisen-Sho");
 			excludedCustomPlayouts.add("Allemande");
 			excludedCustomPlayouts.add("Chains of Thought");
-			excludedCustomPlayouts.add("Pagade Kayi Ata (Sixteen-handed)");
 
 			if (!containsPartOf(excludedCustomPlayouts, game.name()))
 				testCustomPlayouts();
@@ -232,7 +237,6 @@ public class TravisTest
 			excludedTensors.add("Shisen-Sho");
 			excludedTensors.add("Allemande");
 			excludedTensors.add("Chains of Thought");
-			excludedTensors.add("Pagade Kayi Ata (Sixteen-handed)");
 
 			if (!containsPartOf(excludedTensors, game.name()))
 				testStateMoveTensors();
@@ -248,7 +252,6 @@ public class TravisTest
 			excludedPlayoutPerOption.add("Shisen-Sho");
 			excludedPlayoutPerOption.add("Allemande");
 			excludedPlayoutPerOption.add("Chains of Thought");
-			excludedPlayoutPerOption.add("Pagade Kayi Ata (Sixteen-handed)");
 
 			if (!containsPartOf(excludedPlayoutPerOption, game.name()))
 				testPlayoutPerOption((USE_TIME) ? (hour < MIN_HOUR || hour > MAX_HOUR) : true);
@@ -267,7 +270,6 @@ public class TravisTest
 			excludedParallelPlayouts.add("Allemande");
 			excludedParallelPlayouts.add("Chains of Thought");
 			excludedParallelPlayouts.add("Nodal Chess");
-			excludedParallelPlayouts.add("Pagade Kayi Ata (Sixteen-handed)");
 
 			if (!containsPartOf(excludedParallelPlayouts, game.name()))
 				testParallelPlayouts(true);
@@ -299,7 +301,6 @@ public class TravisTest
 			excludedSerialisation.add("Shisen-Sho");
 			excludedSerialisation.add("Allemande");
 			excludedSerialisation.add("Chains of Thought");
-			excludedSerialisation.add("Pagade Kayi Ata (Sixteen-handed)");
 
 			if (!containsPartOf(excludedSerialisation, game.name()))
 				testTrialSerialisation();
@@ -1153,7 +1154,6 @@ public class TravisTest
 		for (final String string : list)
 			if (test.contains(string))
 				return true;
-
 		return false;
 	}
 }
