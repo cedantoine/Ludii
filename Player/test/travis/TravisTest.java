@@ -120,10 +120,8 @@ public class TravisTest
 
 			// We exclude that game from the tests because the legal moves are
 			// too slow to test.
-//			if (!filePath.replaceAll(Pattern.quote("\\"), "/").contains("Pagade Kayi Ata (Sixteen-handed)") &&
-//					!filePath.replaceAll(Pattern.quote("\\"), "/").contains("JulbaharSubgame") &&
-//					!filePath.replaceAll(Pattern.quote("\\"), "/").contains("GrandTrictracSubgame"))
-//				continue;
+			if (!filePath.replaceAll(Pattern.quote("\\"), "/").contains("Pagade Kayi Ata (Sixteen-handed)"))
+				continue;
 
 			// Get game description from resource
 			System.out.println("Game: " + filePath);
