@@ -8,7 +8,6 @@ import annotations.Opt;
 import game.Game;
 import game.equipment.component.Component;
 import game.equipment.container.Container;
-import game.equipment.container.other.Deck;
 import game.types.board.SiteType;
 import game.types.component.DealableType;
 import game.types.state.GameType;
@@ -60,60 +59,9 @@ public final class Deal extends StartRule
 	@Override
 	public void eval(final Context context)
 	{
-		if (type == DealableType.Cards)
-		{
-			evalCards(context);
-		}
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 		{
 			evalDominoes(context);
-		}
-	}
-
-	/**
-	 * To deal cards.
-	 * 
-	 * @param context
-	 */
-	public void evalCards(final Context context)
-	{
-		// If no deck nothing to do.
-		if (context.game().handDeck().isEmpty())
-			return;
-
-		final List<Integer> handIndex = new ArrayList<>();
-		for (final Container c : context.containers())
-			if (c.isHand() && !c.isDeck() && !c.isDice())
-				handIndex.add(Integer.valueOf(context.sitesFrom()[c.index()]));
-
-		// If each player does not have a hand, nothing to do.
-		if (handIndex.size() != context.game().players().count())
-			return;
-
-		final Deck deck = context.game().handDeck().get(0);
-		final ContainerState cs = context.containerState(deck.index());
-		final int indexSiteDeck = context.sitesFrom()[deck.index()];
-		final int sizeDeck = cs.sizeStackCell(indexSiteDeck);
-
-		 if (sizeDeck < count * handIndex.size())
-			throw new IllegalArgumentException("You can not deal so much cards in the initial state.");
-		
-		int hand = 0;
-//		int level = 0;
-		for (int indexCard = 0; indexCard < count * handIndex.size(); indexCard++)
-		{
-			final Action dealAction =  ActionMove.construct(SiteType.Cell, indexSiteDeck,cs.sizeStackCell(indexSiteDeck) - 1, SiteType.Cell, handIndex.get(hand).intValue(), Constants.OFF, Constants.OFF, Constants.OFF, Constants.OFF, false);
-			dealAction.apply(context, true);
-			context.trial().addMove(new Move(dealAction));
-			context.trial().addInitPlacement();
-
-			if (hand == context.game().players().count() - 1)
-			{
-				hand = 0;
-//				level++;
-			}
-			else
-				hand++;
 		}
 	}
 
@@ -197,9 +145,7 @@ public final class Deal extends StartRule
 	@Override
 	public long gameFlags(final Game game)
 	{
-		if (type == DealableType.Cards)
-			return GameType.Card;
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 			return GameType.LargePiece | GameType.Dominoes | GameType.Stochastic | GameType.HiddenInfo;
 		else
 			return 0L;

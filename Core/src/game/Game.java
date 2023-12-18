@@ -25,7 +25,6 @@ import game.equipment.component.Component;
 import game.equipment.container.Container;
 import game.equipment.container.board.Board;
 import game.equipment.container.board.Track;
-import game.equipment.container.other.Deck;
 import game.equipment.container.other.Dice;
 import game.equipment.other.Regions;
 import game.functions.booleans.BooleanFunction;
@@ -191,9 +190,6 @@ public class Game extends BaseLudeme implements API, Serializable
 
 	/** The list of the different sets of dice. */
 	private final List<Dice> handDice = new ArrayList<>();
-
-	/** The list of the different decks. */
-	private final List<Deck> handDeck = new ArrayList<>();
 	
 	/** All variables constraint by the puzzle.*/
 	private final TIntArrayList constraintVariables = new TIntArrayList();
@@ -571,14 +567,6 @@ public class Game extends BaseLudeme implements API, Serializable
 	public List<Dice> handDice()
 	{
 		return Collections.unmodifiableList(handDice);
-	}
-
-	/**
-	 * @return The hand decks of the game.
-	 */
-	public List<Deck> handDeck()
-	{
-		return Collections.unmodifiableList(handDeck);
 	}
 
 	/**
@@ -1021,14 +1009,6 @@ public class Game extends BaseLudeme implements API, Serializable
 				return true;
 
 		return false;
-	}
-
-	/**
-	 * @return True if the game uses somes decks.
-	 */
-	public boolean hasHandDeck()
-	{
-		return !handDeck.isEmpty();
 	}
 
 	/**
@@ -2586,8 +2566,6 @@ public class Game extends BaseLudeme implements API, Serializable
 		for (final Container c : equipment.containers())
 			if (c.isDice())
 				handDice.add((Dice) c);
-			else if (c.isDeck())
-				handDeck.add((Deck) c);
 
 		gameFlags = computeGameFlags();
 
@@ -2711,23 +2689,6 @@ public class Game extends BaseLudeme implements API, Serializable
 								null, null);
 						rule.eval(context);
 					}
-	
-				// Place randomly the cards of the deck in the game.
-				for (final Deck d : context.game().handDeck())
-				{
-					final TIntArrayList components = new TIntArrayList(d.indexComponent());
-					final int nbCards = components.size();
-	
-					for (int i = 0; i < nbCards; i++)
-					{
-						final int j = (context.rng().nextInt(components.size()));
-						final int index = components.getQuick(j);
-						final StartRule rule = new PlaceCustomStack("Card" + index, null, d.name(), SiteType.Cell, null,
-								null, null, null, null, null);
-						components.remove(index);
-						rule.eval(context);
-					}
-				}
 	
 				if (rules.start() != null)
 					rules.start().eval(context);

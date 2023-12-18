@@ -32,10 +32,8 @@ import game.rules.play.moves.nonDecision.effect.Then;
 import game.rules.play.moves.nonDecision.effect.Vote;
 import game.rules.play.moves.nonDecision.effect.set.SetNextPlayerType;
 import game.rules.play.moves.nonDecision.effect.set.SetRotationType;
-import game.rules.play.moves.nonDecision.effect.set.SetTrumpType;
 import game.rules.play.moves.nonDecision.effect.set.direction.SetRotation;
 import game.rules.play.moves.nonDecision.effect.set.nextPlayer.SetNextPlayer;
-import game.rules.play.moves.nonDecision.effect.set.suit.SetTrumpSuit;
 import game.rules.play.moves.nonDecision.effect.state.swap.SwapPlayersType;
 import game.rules.play.moves.nonDecision.effect.state.swap.SwapSitesType;
 import game.rules.play.moves.nonDecision.effect.state.swap.players.SwapPlayers;
@@ -208,58 +206,6 @@ public final class Move extends Decision
 		// We should never reach that except if we forget some codes.
 		if (moves == null)
 			throw new IllegalArgumentException("Move(): A MoveRemoveType is not implemented.");
-
-		moves.setDecision();
-		return moves;
-	}
-	
-	//-------------------------------------------------------------------------
-
-	/**
-	 * For deciding the trump suit of a card game.
-	 * 
-	 * @param moveType The type of move.
-	 * @param setType  The type of property to set.
-	 * @param suit     The suit to choose.
-	 * @param suits    The possible suits to choose.
-	 * @param then     The moves applied after that move is applied.
-	 * 
-	 * @example (move Set TrumpSuit (card Suit at:(handSite Shared)))
-	 * 
-	 */
-	public static Moves construct
-	(
-			     final MoveSetType  moveType,
-			     final SetTrumpType setType,
-	   	     @Or final IntFunction  suit,
-		     @Or final Difference   suits,
-		@Opt     final Then         then
-	)
-	{
-		int numNonNull = 0;
-		if (suit != null)
-			numNonNull++;
-		if (suits != null)
-			numNonNull++;
-
-		if (numNonNull != 1)
-			throw new IllegalArgumentException(
-					"Move(): With SetSuitType only one suit or suits parameter must be non-null.");
-
-		Moves moves = null;
-
-		switch (setType)
-		{
-		case TrumpSuit:
-			moves = new SetTrumpSuit(suit, suits, then);
-			break;
-		default:
-			break;
-		}
-
-		// We should never reach that except if we forget some codes.
-		if (moves == null)
-			throw new IllegalArgumentException("Move(): A SetSuitType is not implemented.");
 
 		moves.setDecision();
 		return moves;

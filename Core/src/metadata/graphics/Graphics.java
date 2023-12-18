@@ -18,7 +18,6 @@ import game.functions.region.RegionFunction;
 import game.types.board.RelationType;
 import game.types.board.ShapeType;
 import game.types.board.SiteType;
-import game.types.component.SuitType;
 import game.types.play.RoleType;
 import main.Constants;
 import main.StringRoutines;
@@ -39,7 +38,6 @@ import metadata.graphics.no.Boolean.NoDicePips;
 import metadata.graphics.no.Boolean.NoSunken;
 import metadata.graphics.others.HiddenImage;
 import metadata.graphics.others.StackType;
-import metadata.graphics.others.SuitRanking;
 import metadata.graphics.piece.colour.PieceColour;
 import metadata.graphics.piece.families.PieceFamilies;
 import metadata.graphics.piece.ground.PieceBackground;
@@ -1276,20 +1274,6 @@ public class Graphics implements Serializable
 				return ((NoDicePips) graphicsItem).noDicePips();
 				
 		return false;
-	}
-	
-	//-------------------------------------------------------------------------
-	
-	/**
-	 * @return The list of the suit ranking.
-	 */
-	public SuitType[] suitRanking()
-	{
-		for (final GraphicsItem graphicsItem : items)
-			if (graphicsItem instanceof SuitRanking)
-				return ((SuitRanking) graphicsItem).suitRanking();
-
-		return null;
 	}
 	
 	//-------------------------------------------------------------------------

@@ -14,7 +14,6 @@ import game.equipment.component.tile.Domino;
 import game.equipment.container.Container;
 import game.equipment.container.board.Board;
 import game.equipment.container.board.Track;
-import game.equipment.container.other.Deck;
 import game.equipment.container.other.Dice;
 import game.equipment.container.other.Hand;
 import game.equipment.other.Dominoes;
@@ -366,14 +365,6 @@ public final class Equipment extends BaseLudeme implements Serializable
 														((Dice) containersWIP.get(indexSameDice)).numLocs()
 														+ dice.numLocs()), null));
 							}
-						}
-						else if (c.isDeck())
-						{
-							containersWIP.add(c);
-							final Deck deck = (Deck) c;
-							final List<Component> cards = deck.generateCards(indexCard, componentsWIP.size());
-							componentsWIP.addAll(cards);
-							indexCard += cards.size();
 						}
 						else 
 						{

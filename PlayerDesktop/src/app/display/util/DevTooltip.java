@@ -15,10 +15,8 @@ import app.PlayerApp;
 import app.utils.SVGUtil;
 import app.views.tools.ToolButton;
 import game.Game;
-import game.equipment.component.Card;
 import game.equipment.component.Component;
 import game.types.board.SiteType;
-import game.types.component.CardType;
 import main.Constants;
 import other.context.Context;
 import other.location.Location;
@@ -109,12 +107,6 @@ public class DevTooltip
 				final int rotationState = cs.rotation(index, level, type);
 				final int countState = cs.count(index, type);
 				
-				final int cardSuit = component.isCard() ? ((Card)component).suit() : Constants.UNDEFINED;
-				final int cardRank = component.rank();
-				final int trumpRank = component.trumpRank();
-				final int trumpValue = component.trumpValue();
-				final CardType cardType = component.cardType();
-				
 				final int value1 = cs.value(index, level, type);
 				final int value2 = component.getValue2();
 				
@@ -182,15 +174,6 @@ public class DevTooltip
 				{
 					toolTipMessage += "stackSize: " + stackSize +"<br>";
 					toolTipMessage += "level: " + level +"<br>";
-				}
-				
-				if (game.hasCard())
-				{
-					toolTipMessage += "cardSuit: " + cardSuit +"<br>";
-					toolTipMessage += "cardRank: " + cardRank +"<br>";
-					toolTipMessage += "trumpRank: " + trumpRank +"<br>";
-					toolTipMessage += "trumpValue: " + trumpValue +"<br>";
-					toolTipMessage += "cardType: " + cardType +"<br>";
 				}
 
 				for (int i = 1; i < hiddenArray.length; i++)

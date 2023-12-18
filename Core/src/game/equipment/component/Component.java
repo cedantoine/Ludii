@@ -12,7 +12,6 @@ import game.rules.play.moves.BaseMoves;
 import game.rules.play.moves.Moves;
 import game.types.board.SiteType;
 import game.types.board.StepType;
-import game.types.component.CardType;
 import game.types.play.RoleType;
 import game.util.directions.DirectionFacing;
 import game.util.graph.Step;
@@ -513,14 +512,6 @@ public class Component extends Item implements Cloneable
 	public int trumpRank()
 	{
 		return Constants.OFF;
-	}
-	
-	/**
-	 * @return The cardtype of the component.
-	 */
-	public CardType cardType()
-	{
-		return null;
 	}
 
 	//---------------------TILE--------------------------------

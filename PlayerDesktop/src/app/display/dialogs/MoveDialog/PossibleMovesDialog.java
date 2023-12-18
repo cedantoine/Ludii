@@ -26,7 +26,6 @@ import graphics.svg.SVGtoImage;
 import main.collections.FastArrayList;
 import other.action.Action;
 import other.action.ActionType;
-import other.action.cards.ActionSetTrumpSuit;
 import other.action.move.move.ActionMove;
 import other.action.others.ActionPropose;
 import other.action.others.ActionVote;
@@ -128,29 +127,6 @@ public class PossibleMovesDialog extends MoveDialog
 					BufferedImage componentImage = null;
 					if (svg != null)
 						componentImage = SVGUtil.createSVGImage(svg.getSVGDocument(),imageSize,imageSize);	
-					
-					final JButton button = AddButton(app, m, componentImage, "");
-					setDialogSize(button, columnNumber, rowNumber, buttonBorderSize);
-					
-					moveShown = true;
-					break;
-				}
-				
-				// Set trump move
-				else if (a instanceof ActionSetTrumpSuit)
-				{
-					final int trumpValue = ((ActionSetTrumpSuit) a).what();
-					String trumpImage = "";
-					Color imageColor = Color.BLACK;
-					switch(trumpValue)
-					{
-						case 1: trumpImage = "card-suit-club"; break;
-						case 2: trumpImage = "card-suit-spade"; break;
-						case 3: trumpImage = "card-suit-diamond"; imageColor = Color.RED; break;
-						case 4: trumpImage = "card-suit-heart"; imageColor = Color.RED; break;
-					}
-					BufferedImage componentImage = SVGUtil.createSVGImage(trumpImage, (int) (imageSize*0.8), (int) (imageSize*0.8));
-					componentImage = BufferedImageUtil.setPixelsToColour(componentImage, imageColor);
 					
 					final JButton button = AddButton(app, m, componentImage, "");
 					setDialogSize(button, columnNumber, rowNumber, buttonBorderSize);

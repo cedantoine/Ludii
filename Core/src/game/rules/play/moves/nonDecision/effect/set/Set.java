@@ -22,7 +22,6 @@ import game.rules.play.moves.nonDecision.effect.set.player.SetValuePlayer;
 import game.rules.play.moves.nonDecision.effect.set.site.SetCount;
 import game.rules.play.moves.nonDecision.effect.set.site.SetState;
 import game.rules.play.moves.nonDecision.effect.set.site.SetValue;
-import game.rules.play.moves.nonDecision.effect.set.suit.SetTrumpSuit;
 import game.rules.play.moves.nonDecision.effect.set.team.SetTeam;
 import game.rules.play.moves.nonDecision.effect.set.value.SetCounter;
 import game.rules.play.moves.nonDecision.effect.set.value.SetPot;
@@ -143,48 +142,6 @@ public final class Set extends Effect
 
 		// We should never reach that except if we forget some codes.
 		throw new IllegalArgumentException("Set(): A SetHiddenType is not implemented.");
-	}
-
-	//-------------------------------------------------------------------------
-
-	/**
-	 * For setting the trump suit.
-	 * 
-	 * @param setType The type of property to set.
-	 * @param suit    The suit to choose.
-	 * @param suits   The possible suits to choose.
-	 * @param then    The moves applied after that move is applied.
-	 * 
-	 * @example (set TrumpSuit (card Suit at:(handSite Shared)))
-	 * 
-	 */
-	public static Moves construct
-	(
-			     final SetTrumpType setType,
-		     @Or final IntFunction  suit,
-		     @Or final Difference   suits,
-		@Opt     final Then         then
-	)
-	{
-		int numNonNull = 0;
-		if (suit != null)
-			numNonNull++;
-		if (suits != null)
-			numNonNull++;
-
-		if (numNonNull != 1)
-			throw new IllegalArgumentException("Set(): With SetSuitType only one suit or suits parameter must be non-null.");
-
-		switch (setType)
-		{
-		case TrumpSuit:
-			return new SetTrumpSuit(suit, suits, then);
-		default:
-			break;
-		}
-
-		// We should never reach that except if we forget some codes.
-		throw new IllegalArgumentException("Set(): A SetSuitType is not implemented.");
 	}
 	
 	//-------------------------------------------------------------------------

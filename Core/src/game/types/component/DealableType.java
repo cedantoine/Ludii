@@ -8,8 +8,5 @@ package game.types.component;
 public enum DealableType
 {
 	/** Domino component. */
-	Dominoes,
-	
-	/** Card component. */
-	Cards,
+	Dominoes
 }

@@ -27,7 +27,6 @@ import other.UndoData;
 import other.action.Action;
 import other.action.ActionType;
 import other.action.BaseAction;
-import other.action.cards.ActionSetTrumpSuit;
 import other.action.die.ActionSetDiceAllEqual;
 import other.action.die.ActionUpdateDice;
 import other.action.die.ActionUseDie;
@@ -342,8 +341,6 @@ public class Move extends BaseAction
 				actions.add(new ActionBet(actionStr));
 			else if (actionStr.startsWith("[Pass:"))
 				actions.add(new ActionPass(actionStr));
-			else if (actionStr.startsWith("[SetTrumpSuit:"))
-				actions.add(new ActionSetTrumpSuit(actionStr));
 			else if (actionStr.startsWith("[SetPending:"))
 				actions.add(new ActionSetPending(actionStr));
 			else if (actionStr.startsWith("[Promote:"))

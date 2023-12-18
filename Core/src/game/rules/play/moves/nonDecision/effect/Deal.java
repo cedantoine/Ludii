@@ -9,7 +9,6 @@ import annotations.Opt;
 import game.Game;
 import game.equipment.component.Component;
 import game.equipment.container.Container;
-import game.equipment.container.other.Deck;
 import game.functions.ints.IntConstant;
 import game.functions.ints.IntFunction;
 import game.rules.play.moves.BaseMoves;
@@ -77,71 +76,10 @@ public final class Deal extends Effect
 	@Override
 	public Moves eval(final Context context)
 	{
-		if (type == DealableType.Cards)
-			return evalCards(context);
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 			return evalDominoes(context);
 
 		return new BaseMoves(super.then());
-	}
-
-	//-------------------------------------------------------------------------
-
-	/**
-	 * @param context
-	 * @return The moves to deal cards.
-	 */
-	public Moves evalCards(final Context context)
-	{
-		final Moves moves = new BaseMoves(super.then());
-
-		// If no deck nothing to do.
-		if (context.game().handDeck().isEmpty())
-			return moves;
-
-		final List<Integer> handIndex = new ArrayList<>();	
-		for (final Container c : context.containers())
-			if (c.isHand() && !c.isDeck() && !c.isDice())
-				handIndex.add(Integer.valueOf(context.sitesFrom()[c.index()]));
-
-		// If each player does not have a hand, nothing to do.
-		if (handIndex.size() != context.game().players().count())
-			return moves;
-
-		final Deck deck = context.game().handDeck().get(0);
-		final ContainerState cs = context.containerState(deck.index());
-		final int indexSiteDeck = context.sitesFrom()[deck.index()];
-		final int sizeDeck = cs.sizeStackCell(indexSiteDeck);
-		final int count = countFn.eval(context);
-
-		if (sizeDeck < count * handIndex.size())
-			throw new IllegalArgumentException("You can not deal so much cards.");
-
-		int hand = (beginWith == null) ? 0 : (beginWith.eval(context) - 1);
-		int counter = 0;
-		for (int indexCard = 0; indexCard < count * handIndex.size(); indexCard++)
-		{
-			final Action dealAction = ActionMove.construct(SiteType.Cell, indexSiteDeck, cs.sizeStackCell(indexSiteDeck) - 1 - counter, SiteType.Cell, handIndex.get(hand).intValue(), Constants.OFF, Constants.OFF, Constants.OFF, Constants.OFF, false);
-			final Move move = new Move(dealAction);
-			moves.moves().add(move);
-
-			if (hand == context.game().players().count() - 1)
-				hand = 0;
-			else
-				hand++;
-			counter++;
-		}
-
-		// The subsequents to add to the moves
-		if (then() != null)
-			for (int j = 0; j < moves.moves().size(); j++)
-				moves.moves().get(j).then().add(then().moves());
-
-		// Store the Moves in the computed moves.
-		for (int j = 0; j < moves.moves().size(); j++)
-			moves.moves().get(j).setMovesLudeme(this);
-
-		return moves;
 	}
 
 	//-------------------------------------------------------------------------
@@ -235,9 +173,7 @@ public final class Deal extends Effect
 		if (then() != null)
 			gameFlags |= then().gameFlags(game);
 
-		if (type == DealableType.Cards)
-			return GameType.Card | gameFlags;
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 			return GameType.LargePiece | GameType.Dominoes | GameType.Stochastic | GameType.HiddenInfo
 					| gameFlags;
 		else
@@ -254,9 +190,7 @@ public final class Deal extends Effect
 		if (then() != null)
 			concepts.or(then().concepts(game));
 
-		if (type == DealableType.Cards)
-			concepts.set(Concept.Card.id(), true);
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 			concepts.set(Concept.Domino.id(), true);
 
 		return concepts;
@@ -290,27 +224,7 @@ public final class Deal extends Effect
 	public boolean missingRequirement(final Game game)
 	{
 		boolean missingRequirement = false;
-		if (type == DealableType.Cards)
-		{
-			boolean gameHasCard = false;
-			for (int i = 1; i < game.equipment().components().length; i++)
-			{
-				final Component component = game.equipment().components()[i];
-				if (component.isCard())
-				{
-					gameHasCard = true;
-					break;
-				}
-
-			}
-
-			if (!gameHasCard)
-			{
-				game.addRequirementToReport("The ludeme (deal Cards ...) is used but the equipment has no cards.");
-				missingRequirement = true;
-			}
-		}
-		else if (type == DealableType.Dominoes)
+		if (type == DealableType.Dominoes)
 		{
 			if (!game.hasDominoes())
 			{
