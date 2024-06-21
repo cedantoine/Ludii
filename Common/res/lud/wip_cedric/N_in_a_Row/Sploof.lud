@@ -1,0 +1,72 @@
+(game "Sploof" 
+    (players 2) 
+    (equipment { 
+        (board (square 4 pyramidal:True) use:Vertex) 
+        (piece "Ball" Each)
+        (piece "Ball" Neutral)
+        (hand Each)
+    }) 
+    
+    (rules 
+    	(meta {(pin SupportMultiple) (gravity) })
+    	(start {
+    		(place "Ball0" {0 1 2 3 7 12 17 22 26 27 28 29})
+    		(place "Ball" "Hand" count:2)
+    	})
+   
+        (play 
+        	(or
+        		(move 
+        			(from (handSite Mover)) 
+        			(to 
+        				(sites Empty) 
+        				if:(is Flat)
+        			)
+        		)
+        		(move Remove
+        			(sites Occupied by:Neutral)
+        			(then (add (piece (mover)) (to (handSite Mover)) count:2))
+        		)
+        	)
+        )
+        
+        (end {
+        	(if 
+        		(is Line 4 what:(id "Ball" Mover) isVisible:True)
+        		(result Mover Win)
+            )
+        	(if
+        		(no Moves Mover)
+        		(result Next Win)
+        	)
+        })
+    )
+)
+
+//------------------------------------------------------------------------------
+
+(metadata 
+		
+	(info
+		{
+		(description "Sploof is a four-in-a-row style game for two players with a Series: Shibumi set. Players have limited resources available and are faced with a choice between positioning balls for strategic effect; or stockpiling them to avoid forced moves later in the game.")
+		(rules "The board starts with twelve red balls placed around the perimeter of the board. Two players, White and Black, start the game with two balls of their colour in their ‘stock’, the remaining balls are kept in a central ‘supply’. A player's stock must not be hidden from their opponent. On their turn a player must either: Place a ball on either an empty board hole or stack it on any 2x2 platform of existing balls, or Remove a red ball from the board returning it to the supply and move two balls of their colour from the supply to their stock. The removal of red balls and placement of black and white balls follows Shibumi stacking in that balls may only stack on 2x2 platforms of existing balls and if a red ball is removed then any others that it supports will drop. A red ball that directly supports two or more on the level above is pinned and cannot be removed.")
+		(version "1.0.0")
+	    (classification "wip_cedric/N_in_a_Row")
+	    (author "Matt Green")
+	    (publisher "Computational Creativity Group, nestorgames")
+	    (credit "Cédric Antoine")
+	    (date "2011")
+		}
+	)
+    
+    (graphics {
+        (piece Scale "Ball" 1.0)
+        (board Style Shibumi)
+        (piece Colour Neutral fillColour:(colour Red))
+		(piece Colour P1 fillColour:(colour White))
+		(piece Colour P2 fillColour:(colour Black))
+		(show Score)
+    })
+       
+)
