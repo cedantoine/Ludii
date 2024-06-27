@@ -9,6 +9,7 @@ import main.CommandLineArgParse;
 import main.CommandLineArgParse.ArgOption;
 import main.CommandLineArgParse.OptionTypes;
 import skillTraceAnalysis.SkillTraceAnalysis;
+import supplementary.experiments.concepts.ParallelComputeConceptsMultipleGames;
 import supplementary.experiments.debugging.FindCrashingTrial;
 import supplementary.experiments.eval.EvalAgents;
 import supplementary.experiments.eval.EvalGames;
@@ -80,7 +81,8 @@ public class PlayerCLI
 					"--kilothon",
 					"--identify-top-features",
 					"--skill-trace-analysis",
-					"--parallel-eval-multi-games-multi-agents"
+					"--parallel-eval-multi-games-multi-agents",
+					"--parallel-compute-concepts-multiple-games"
 				)
 				.withNumVals(1)
 				.withType(OptionTypes.String));
@@ -141,6 +143,8 @@ public class PlayerCLI
 //		}
 		else if (command.equalsIgnoreCase("--parallel-eval-multi-games-multi-agents"))
 			ParallelEvalMultiGamesMultiAgents.main(passArgs);
+		else if (command.equalsIgnoreCase("--parallel-compute-concepts-multiple-games"))
+			ParallelComputeConceptsMultipleGames.main(passArgs);
 		else
 			System.err.println("ERROR: command not yet implemented: " + command);
 
