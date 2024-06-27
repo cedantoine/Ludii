@@ -97,7 +97,7 @@ public class TravisTest
 		// Load from memory
 		final String[] choices = FileHandling.listGames();
 
-		for (final String filePath : choices)
+		for (String filePath : choices)
 		{
 			final long startGameAt = System.nanoTime();
 			if (filePath.replaceAll(Pattern.quote("\\"), "/").contains("/lud/bad/"))
@@ -125,6 +125,8 @@ public class TravisTest
 
 			// Get game description from resource
 			// System.out.println("Game: " + filePath);
+			
+//			filePath = "/lud/wip_cedric/Connection/Spaji.lud";
 
 			String path = filePath.replaceAll(Pattern.quote("\\"), "/");
 			path = path.substring(path.indexOf("/lud/"));
