@@ -105,6 +105,9 @@ public class TravisTest
 
 			if (filePath.replaceAll(Pattern.quote("\\"), "/").contains("/lud/wip/"))
 				continue;
+			
+//			if (filePath.replaceAll(Pattern.quote("\\"), "/").contains("/lud/wip_cedric/"))
+//				continue;
 
 			if (filePath.replaceAll(Pattern.quote("\\"), "/").contains("/lud/wishlist/"))
 				continue;
@@ -126,7 +129,7 @@ public class TravisTest
 			// Get game description from resource
 			// System.out.println("Game: " + filePath);
 			
-//			filePath = "/lud/wip_cedric/Connection/Spaji.lud";
+//			filePath = "/lud/wip_cedric/Counting/Spirit.lud";
 
 			String path = filePath.replaceAll(Pattern.quote("\\"), "/");
 			path = path.substring(path.indexOf("/lud/"));

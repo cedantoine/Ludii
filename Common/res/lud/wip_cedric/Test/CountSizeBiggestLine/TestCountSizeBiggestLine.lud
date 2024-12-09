@@ -1,0 +1,33 @@
+(game "TestCountSizeBiggestLine" 
+    (players 2) 
+    (equipment { 
+        (board (square 4 pyramidal:True) use:Vertex) 
+        (piece "Ball" Each) 
+    }) 
+    (rules
+        (play
+        	(move Add 
+        		(to (sites Empty) 
+        			if:(is Flat)
+                )
+            )
+        )
+        (end
+            (if (= (count SizeBiggestLine) 3) (result Mover Win))
+        )
+    )
+)
+
+//------------------------------------------------------------------------------
+
+(metadata 
+    
+	(graphics {
+		(piece Scale "Ball" 1.0)
+	    (board Style Shibumi)
+	    (piece Colour P1 fillColour:(colour White))
+	    (piece Colour P2 fillColour:(colour Black))
+	    (piece Colour P3 fillColour:(colour Red))
+	})
+       
+)

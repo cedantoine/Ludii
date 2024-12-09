@@ -34,7 +34,7 @@ public final class CountSitesPlatformBelow extends BaseIntFunction
 	/** The graph element type. */
 	private SiteType type;
 
-	/** The owner of the pieces to make a line */
+	/** The owner of the pieces to count on the lower platform */
 	private final IntFunction whoFn;
 	
 	/** The site to test. */

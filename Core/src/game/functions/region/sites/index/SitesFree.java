@@ -1,0 +1,154 @@
+package game.functions.region.sites.index;
+
+import java.util.BitSet;
+import java.util.List;
+
+import annotations.Hide;
+import annotations.Opt;
+import game.Game;
+import game.functions.region.BaseRegionFunction;
+import game.types.board.SiteType;
+import game.util.directions.AbsoluteDirection;
+import game.util.equipment.Region;
+import other.context.Context;
+import other.state.container.ContainerState;
+import other.topology.TopologyElement;
+import gnu.trove.list.array.TIntArrayList;
+
+/**
+ * Returns the free (i.e. with no pieces on top) sites of a container.
+ * 
+ * @author Cedric Antoine
+ */
+
+@Hide
+public final class SitesFree extends BaseRegionFunction
+{
+	private static final long serialVersionUID = 1L;
+
+	//-------------------------------------------------------------------------
+
+	/**
+	 * @param type Type of graph element [default SiteType of the board].
+	 * 
+	 * @example (free)
+	 */
+	
+	public SitesFree
+	(
+		@Opt final SiteType type
+	)
+	{
+		this.type = type;
+	}
+
+	//-------------------------------------------------------------------------
+
+	@Override
+	public Region eval(final Context context)
+	{
+		final TopologyElement vertexLoc = context.topology().vertices().get(0);
+		final ContainerState state = context.state().containerStates()[context.containerId()[vertexLoc.index()]];
+		final List<? extends TopologyElement> sites = context.topology().getGraphElements(type);
+		TIntArrayList sites_free = new TIntArrayList();
+		
+		for (final TopologyElement site : sites) {
+			List<game.util.graph.Step> unw = context.game().board().topology().trajectories()
+					.steps(type, site.index(), type, AbsoluteDirection.UNW);
+			
+			List<game.util.graph.Step> usw = context.game().board().topology().trajectories()
+					.steps(type, site.index(), type, AbsoluteDirection.USW);
+			List<game.util.graph.Step> une = context.game().board().topology().trajectories()
+					.steps(type, site.index(), type, AbsoluteDirection.UNE);
+			List<game.util.graph.Step> use = context.game().board().topology().trajectories()
+					.steps(type, site.index(), type, AbsoluteDirection.USE);
+			
+			if ((unw.isEmpty() || (!unw.isEmpty() && state.what(unw.get(0).to().id(),type) == 0)) &&
+				    (usw.isEmpty() || (!usw.isEmpty() && state.what(usw.get(0).to().id(),type) == 0)) &&
+				    (une.isEmpty() || (!une.isEmpty() && state.what(une.get(0).to().id(),type) == 0)) &&
+				    (use.isEmpty() || (!use.isEmpty() && state.what(use.get(0).to().id(),type) == 0))) {
+				    sites_free.add(site.index());
+				}
+		}
+		
+		int[] free_s = sites_free.toArray();
+		
+		return new Region(free_s);
+	}
+
+	//-------------------------------------------------------------------------
+
+	@Override
+	public boolean isStatic()
+	{
+		// we're looking at "free" in a specific context, so never static
+		return false;
+	}
+
+	@Override
+	public String toString()
+	{
+		if (type == null)
+			return "Null type in Free.";
+		
+		return "FreeVertex()";
+	}
+
+	@Override
+	public long gameFlags(final Game game)
+	{
+		long gameFlags = SiteType.gameFlags(type);
+
+		return gameFlags;
+	}
+	
+	@Override
+	public BitSet concepts(final Game game)
+	{
+		final BitSet concepts = new BitSet();
+		concepts.or(SiteType.concepts(type));
+		return concepts;
+	}
+
+	@Override
+	public BitSet writesEvalContextRecursive()
+	{
+		final BitSet writeEvalContext = new BitSet();
+		return writeEvalContext;
+	}
+
+	@Override
+	public BitSet readsEvalContextRecursive()
+	{
+		final BitSet readEvalContext = new BitSet();
+		return readEvalContext;
+	}
+
+	@Override
+	public boolean missingRequirement(final Game game)
+	{
+		boolean missingRequirement = false;
+		return missingRequirement;
+	}
+
+	@Override
+	public boolean willCrash(final Game game)
+	{
+		boolean willCrash = false;
+		return willCrash;
+	}
+
+	@Override
+	public void preprocess(final Game game)
+	{
+		type = SiteType.use(type, game);
+	}
+	
+	@Override
+	public String toEnglish(final Game game) 
+	{
+		return "free " + type.name();
+	}
+
+}
+	

@@ -30,4 +30,7 @@ public enum SitesIndexType
 
 	/** Sites in a specified layer. */
 	Layer,
+	
+	/** Sites which are free (no poieces on top of it). */
+	Free,
 }

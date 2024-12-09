@@ -205,6 +205,7 @@ public final class Count extends BaseIntFunction
 	 * @param name      The name of the container from which to count the number of
 	 *                  sites or the name of the piece to count only pieces of that
 	 *                  type.
+	 * @param who  		Player id the counted items belong to
 	 * 
 	 * @example (count at:(last To))
 	 * 
@@ -216,7 +217,9 @@ public final class Count extends BaseIntFunction
 		@Opt           final SiteType 		type,
 		@Opt @Or @Name final RegionFunction in, 
 		@Opt @Or @Name final IntFunction 	at, 
-		@Opt @Or       final String 		name
+		@Opt @Or       final String 		name,
+		@Opt		   final RoleType 		who
+		
 	)
 	{
 		int numNonNull = 0;
@@ -248,6 +251,8 @@ public final class Count extends BaseIntFunction
 			return new CountOrthogonal(type, in, at);
 		case Sites:
 			return new CountSites(in, at, name);
+		case SitesPlatformBelow:
+			return new CountSitesPlatformBelow(type, at, who);
 		default:
 			break;
 		}
@@ -346,37 +351,6 @@ public final class Count extends BaseIntFunction
 		// We should never reach that except if we forget some codes.
 		throw new IllegalArgumentException("Count(): A CountGroupsType is not implemented.");
 	}
-	
-	//-------------------------------------------------------------------------
-
-	/**
-	 * For counting elements on a platform below another element
-	 * 
-	 * @param countType The property to count.
-	 * @param type       The graph element type [default SiteType of the board].
-	 * @param site      The site to test.
-	 * @param who  		Player id the counted items belong to
-	 * 
-	 * @example (count SitesPlatformBelow Mover)
-	 */
-	public static IntFunction construct
-	(
-					final CountSitesPlatformBelowType 	countType,
-		@Opt 	   	final SiteType          			type,
-		@Opt 		final IntFunction 				  	site,
-					final RoleType 						who
-	)
-		{
-			switch (countType)
-			{
-			case SitesPlatformBelow:
-				return new CountSitesPlatformBelow(type, site, who);
-			default:
-				break;
-			}
-			// We should never reach that except if we forget some codes.
-			throw new IllegalArgumentException("Count(): A CountGroupsType is not implemented.");
-		}
 	
 	//-------------------------------------------------------------------------
 

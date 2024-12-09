@@ -1,3 +1,74 @@
+(define "KnightMoveSites"
+	(difference 
+		(difference 
+			(sites Direction 
+				from:(difference 
+					(difference 
+						(sites Direction from:(from) SameLayer distance:2) 
+						(sites Direction from:(from) Diagonal distance:2)
+					) 
+					(difference 
+						(sites Direction from:(from) SameLayer distance:1) 
+						(sites Direction from:(from) Diagonal distance:1)
+					)
+				) 
+				SameLayer 
+				distance:1
+			) 
+			(sites Direction 
+				from:(difference 
+					(difference 
+						(sites Direction from:(from) SameLayer distance:2) 
+						(sites Direction from:(from) Diagonal distance:2)
+					) 
+					(difference 
+						(sites Direction from:(from) SameLayer distance:1) 
+						(sites Direction from:(from) Diagonal distance:1))
+				) 
+				Diagonal 
+				distance:1
+			)
+		) 
+		(intersection 
+			(difference 
+				(sites Direction from:(from) SameLayer distance:3) 
+				(sites Direction from:(from) Diagonal distance:3)
+			) 
+			(difference 
+				(sites Direction 
+					from:(difference 
+						(difference 
+							(sites Direction from:(from) SameLayer distance:2) 
+							(sites Direction from:(from) Diagonal distance:2)
+						) 
+						(difference 
+								(sites Direction from:(from) SameLayer distance:1) 
+								(sites Direction from:(from) Diagonal distance:1))
+						) 
+					SameLayer 
+					distance:1
+				) 
+				(sites Direction 
+					from:(difference 
+						(difference 
+							(sites Direction from:(from) SameLayer distance:2) 
+							(sites Direction from:(from) Diagonal distance:2)
+						) 
+						(difference 
+							(sites Direction from:(from) SameLayer distance:1) 
+							(sites Direction from:(from) Diagonal distance:1)
+						)
+					) 
+					Diagonal 
+					distance:1
+				)
+			)
+		)
+	)
+)
+
+// ------------------------------------------------------------------------------
+
 (game "Spight" 
     (players 2) 
     (equipment { 
@@ -12,20 +83,32 @@
         	(place "Ball2" {1 3 7 10 18 22 26 28})
         })
     	(play
-    		(or
+    		(or {
     			(move
     				(from (intersection (sites Layer 0) (sites Occupied by:Mover)))
-    				(to (sites Empty) 
+    				(to (intersection { (sites Empty) "KnightMoveSites" })
             			if:(is Flat)
             		)
     			)
     			(move
-        			(from (intersection (sites Layer 1) (sites Occupied by:Mover)))
-        			(to (intersection (sites Empty) (sites Layer 1))
+        			(from (intersection (sites Layer 0) (sites Occupied by:Mover)))
+        			(to (intersection {(sites Empty) (sites Around (sites Direction from:(from) Upward distance:1) distance:1) (sites Layer 1)})
                 		if:(is Flat)
                 	)
         		)
-    		)
+    			(move
+        			(from (intersection (sites Layer 1) (sites Occupied by:Mover)))
+        			(to (intersection (sites Empty) "KnightMoveSites")
+                		if:(is Flat)
+                	)
+    			)
+    			(move
+            		(from (intersection (sites Layer 1) (sites Occupied by:Mover)))
+            		(to (intersection {(sites Empty) (sites Around (sites Direction from:(from) Upward distance:1) distance:1) (sites Layer 2)})
+                    	if:(is Flat)
+                    )
+            	)
+    		})
     	)
     	(end 
     		(if

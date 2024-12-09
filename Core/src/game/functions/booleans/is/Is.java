@@ -37,6 +37,7 @@ import game.functions.booleans.is.line.IsLine;
 import game.functions.booleans.is.loop.IsLoop;
 import game.functions.booleans.is.path.IsPath;
 import game.functions.booleans.is.pattern.IsPattern;
+import game.functions.booleans.is.pyramidCorners.IsPyramidCorners;
 import game.functions.booleans.is.player.IsActive;
 import game.functions.booleans.is.player.IsEnemy;
 import game.functions.booleans.is.player.IsFriend;
@@ -228,6 +229,7 @@ public class Is extends BaseBooleanFunction
 	 * @param walk   The walk describing the pattern.
 	 * @param type   The type of the site from to detect the pattern.
 	 * @param from   The site from to detect the pattern [(last To)].
+	 * @param froms  The sites from to detect the pattern [(last To)].
 	 * @param what   The piece to check in the pattern [piece in from].
 	 * @param whats  The sequence of pieces to check in the pattern [piece in from].
 	 *
@@ -236,11 +238,12 @@ public class Is extends BaseBooleanFunction
 	public static BooleanFunction construct
 	(
 		               final IsPatternType isType,
-                       final StepType[]    walk,
-            @Opt       final SiteType      type,
-	        @Opt @Name final IntFunction   from,
-	    @Or @Opt @Name final IntFunction   what,
-	    @Or @Opt @Name final IntFunction[] whats
+		     @Opt       final StepType[]    walk,
+             @Opt       final SiteType      type,
+        @Or2 @Opt @Name final IntFunction   from,
+	    @Or  @Opt @Name final IntFunction   what,
+	    @Or  @Opt @Name final IntFunction[] whats,
+	    @Or2 @Opt @Name final RegionFunction froms
 	)
 	{
 		int numNonNull = 0;
@@ -256,6 +259,8 @@ public class Is extends BaseBooleanFunction
 		{
 		case Pattern:
 			return new IsPattern(walk, type, from, what, whats);
+		case PyramidCorners:
+			return new IsPyramidCorners(type, from, froms);
 		default:
 			break;
 		}

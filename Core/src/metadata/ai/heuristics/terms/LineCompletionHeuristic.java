@@ -114,6 +114,7 @@ public class LineCompletionHeuristic extends HeuristicTerm
 	@Override
 	public float computeValue(final Context context, final int player, final float absWeightThreshold)
 	{
+//		System.out.println("I indeed came here");
 		final Game game = context.game();
 		final Owned owned = context.state().owned();
 		final List<? extends Location>[] pieces = owned.positions(player);

@@ -1,0 +1,14 @@
+game=/lud/wip_cedric/Test/CountSizeBiggestLine/TestCountSizeBiggestLine.lud
+START GAME OPTIONS
+END GAME OPTIONS
+RNG internal state=-22,-80,52,74,-91,-20,-98,-57
+Move=[Move:mover=1,from=18,to=18,actions=[Add:type=Vertex,to=18,what=1,decision=true]]
+Move=[Move:mover=2,from=10,to=10,actions=[Add:type=Vertex,to=10,what=2,decision=true]]
+Move=[Move:mover=1,from=8,to=8,actions=[Add:type=Vertex,to=8,what=1,decision=true]]
+Move=[Move:mover=2,from=12,to=12,actions=[Add:type=Vertex,to=12,what=2,decision=true]]
+numInitialPlacementMoves=0
+winner=2
+endtype=NaturalEnd
+rankings=0.0,2.0,1.0
+SANDBOX=false
+LUDII_VERSION=1.3.12
