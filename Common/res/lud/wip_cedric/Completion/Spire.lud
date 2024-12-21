@@ -107,14 +107,14 @@
 			    				(from (handSite Mover)) 
 			    	    		(to 
 			    	    			(sites Empty) 
-			    	    			if:(and {(is Flat) "PlatformContainsLessThanTwo" (< (count SitesPlatformBelow Mover) 2)})
+			    	    			if:(and {(is Flat) "PlatformContainsLessThanTwo" (< (count SitesPlatformBelow who:Mover) 2)})
 			    	    		)
 			    	    	)
 			    			(move 
 			    				(from (handSite Shared))
 			    	    		(to 
 			    	    			(sites Empty) 
-			    	    			if:(and {(is Flat) "PlatformContainsLessThanTwoNeutral" (< (count SitesPlatformBelow Neutral) 2)})
+			    	    			if:(and {(is Flat) "PlatformContainsLessThanTwoNeutral" (< (count SitesPlatformBelow who:Neutral) 2)})
 			    	    		)
 			    	    		(then (moveAgain))
 			    	    	)
@@ -126,7 +126,7 @@
 		    				(from (handSite Mover)) 
 		    	    		(to 
 		    	    			(sites Empty) 
-		    	    			if:(and {(is Flat) "PlatformContainsLessThanTwo" (< (count SitesPlatformBelow Mover) 2)})
+		    	    			if:(and {(is Flat) "PlatformContainsLessThanTwo" (< (count SitesPlatformBelow who:Mover) 2)})
 		    	    		)
 		    	    	)
 		    		)

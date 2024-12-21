@@ -22,8 +22,7 @@
         	)
         )
         (end {
-            (if (is PyramidCorners froms:(sites Occupied by:Mover)) (result Mover Win))
-            (if (is PyramidCorners froms:(sites Occupied by:Next)) (result Next Win))
+            (if (is Line 3 DSW through:(last To) Mover ) (result Mover Win))
         })
     )
 )

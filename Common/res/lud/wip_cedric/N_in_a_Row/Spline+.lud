@@ -16,7 +16,7 @@
         		(move
         			(from (sites Occupied by:Mover))
         			(to (sites Empty) 
-            			if:(is Flat) //and not on fallen ball
+            			if:(is Flat)
             		)
         		)
             )

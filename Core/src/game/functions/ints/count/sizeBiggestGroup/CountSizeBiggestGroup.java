@@ -26,6 +26,9 @@ import other.context.EvalContextData;
 import other.state.container.ContainerState;
 import other.topology.Topology;
 import other.topology.TopologyElement;
+import game.functions.region.RegionFunction;
+import java.util.ArrayList;
+
 
 /**
  * Returns the size of the biggest Group
@@ -49,6 +52,9 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 	
 	/** The visibility condition */
 	private final BooleanFunction isVisibleFn;
+	
+	/** The locations to look for the groups. */
+	private final RegionFunction throughAny;
 
 	//-------------------------------------------------------------------------
 
@@ -58,11 +64,13 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 	 *                   group [Adjacent].
 	 * @param If         The condition on the pieces to include in the group.
 	 * @param isVisible  Visibility condition for group pieces
+	 * @param throughAny The locations to look for the groups.
 	 */
 	public CountSizeBiggestGroup
 	(
 		@Opt 	        final SiteType        type,
 		@Opt            final Direction       directions,
+		@Opt			final RegionFunction  throughAny,
 		@Opt @Or @Name  final BooleanFunction If,
 		@Opt @Or @Name  final BooleanFunction isVisible
 	)
@@ -72,6 +80,7 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 				: new Directions(AbsoluteDirection.Adjacent, null);
 		condition = (If != null) ? If : new IsOccupied(type, To.construct());
 		isVisibleFn = (isVisible == null) ? new BooleanConstant(false) : isVisible;
+		this.throughAny = throughAny;
 	}
 
 	//-------------------------------------------------------------------------
@@ -80,7 +89,20 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 	public int eval(final Context context)
 	{
 		final Topology topology = context.topology();
-		final List<? extends TopologyElement> sites = context.topology().getGraphElements(type);
+		List<? extends TopologyElement> sites; 
+		if(throughAny == null) {
+			sites = context.topology().getGraphElements(type);
+		}
+		else {
+			final TIntArrayList listPivots = new TIntArrayList(throughAny.eval(context).sites());
+			List<TopologyElement> tempSites = new ArrayList<>();
+			for(int i : listPivots.toArray()) {		
+				tempSites.add(context.topology().getGraphElement(type, i));
+			}
+			sites = tempSites;
+			
+		}
+		
 		final ContainerState cs = context.containerState(0);
 		final int origTo = context.to();
 

@@ -41,49 +41,49 @@
 	        		)
 	        		(then //not working, have to change it (take into account one ball possibly making 2 lines and lines not being made of ups and downs)
 	        			(if 
-	        				(and {(is Line 3 DSW through:(last To) Mover useOpposites:False) (is Line 3 DNE through:(last To) Mover useOpposites:False)	(or (is Line 3 DSE through:(last To) Mover useOpposites:False) (is Line 3 DNW through:(last To) Mover useOpposites:False))})
+	        				(and {(is Line 3 DSW through:(last To) Mover ) (is Line 3 DNE through:(last To) Mover )	(or (is Line 3 DSE through:(last To) Mover ) (is Line 3 DNW through:(last To) Mover ))})
 	        				(and {
 	        					(addScore Mover 3)
 	        					(forget Value "LastScored" All)
 	        					(remember Value "LastScored" (mover))
 	        				})
 	        				(if
-	        					(and {(is Line 3 DNW through:(last To) Mover useOpposites:False) (is Line 3 DSE through:(last To) Mover useOpposites:False)	(or (is Line 3 DNE through:(last To) Mover useOpposites:False) (is Line 3 DSW through:(last To) Mover useOpposites:False))})
+	        					(and {(is Line 3 DNW through:(last To) Mover ) (is Line 3 DSE through:(last To) Mover )	(or (is Line 3 DNE through:(last To) Mover ) (is Line 3 DSW through:(last To) Mover ))})
 	        					(and {
 		        					(addScore Mover 3)
 		        					(forget Value "LastScored" All)
 		        					(remember Value "LastScored" (mover))
 		        				})
 	            				(if
-			        				(and (is Line 3 DNW through:(last To) Mover useOpposites:False) (or {(is Line 3 DNE through:(last To) Mover useOpposites:False) (is Line 3 DSW through:(last To) Mover useOpposites:False) (is Line 3 DSE through:(last To) Mover useOpposites:False)}))
+			        				(and (is Line 3 DNW through:(last To) Mover ) (or {(is Line 3 DNE through:(last To) Mover ) (is Line 3 DSW through:(last To) Mover ) (is Line 3 DSE through:(last To) Mover )}))
 	            					(and {
 	    	        					(addScore Mover 2)
 	    	        					(forget Value "LastScored" All)
 	    	        					(remember Value "LastScored" (mover))
 	    	        				})
 			        				(if
-			        					(and (is Line 3 DNE through:(last To) Mover useOpposites:False) (or (is Line 3 DSW through:(last To) Mover useOpposites:False) (is Line 3 DSE through:(last To) Mover useOpposites:False)))
+			        					(and (is Line 3 DNE through:(last To) Mover ) (or (is Line 3 DSW through:(last To) Mover ) (is Line 3 DSE through:(last To) Mover )))
 			        					(and {
 		    	        					(addScore Mover 2)
 		    	        					(forget Value "LastScored" All)
 		    	        					(remember Value "LastScored" (mover))
 		    	        				})
 			        					(if
-			        						(and (is Line 3 DSW through:(last To) Mover useOpposites:False) (is Line 3 DSE through:(last To) Mover useOpposites:False))
+			        						(and (is Line 3 DSW through:(last To) Mover ) (is Line 3 DSE through:(last To) Mover ))
 			        						(and {
 			    	        					(addScore Mover 2)
 			    	        					(forget Value "LastScored" All)
 			    	        					(remember Value "LastScored" (mover))
 			    	        				})
 			        						(if
-			        							(and (is Line 3 N through:(last To) Mover useOpposites:False) (or (is Line 3 W through:(last To) Mover useOpposites:False) (is Line 3 E through:(last To) Mover useOpposites:False)))
+			        							(and (is Line 3 N through:(last To) Mover ) (or (is Line 3 W through:(last To) Mover ) (is Line 3 E through:(last To) Mover )))
 			        							(and {
 				    	        					(addScore Mover 2)
 				    	        					(forget Value "LastScored" All)
 				    	        					(remember Value "LastScored" (mover))
 				    	        				})
 			        							(if
-			        								(and (is Line 3 S through:(last To) Mover useOpposites:False) (or (is Line 3 W through:(last To) Mover useOpposites:False) (is Line 3 E through:(last To) Mover useOpposites:False)))
+			        								(and (is Line 3 S through:(last To) Mover ) (or (is Line 3 W through:(last To) Mover ) (is Line 3 E through:(last To) Mover )))
 			        								(and {
 			    	    	        					(addScore Mover 2)
 			    	    	        					(forget Value "LastScored" All)
@@ -97,7 +97,7 @@
 			        	    	        					(remember Value "LastScored" (mover))
 			        	    	        				})
 			            								(if
-			            									(or {(is Line 3 SameLayer through:(last To) Mover) (is Line 3 DNW through:(last To) Mover useOpposites:False) (is Line 3 DNE through:(last To) Mover useOpposites:False) (is Line 3 DSE through:(last To) Mover useOpposites:False) (is Line 3 DSW through:(last To) Mover useOpposites:False)})
+			            									(or {(is Line 3 SameLayer through:(last To) Mover) (is Line 3 DNW through:(last To) Mover ) (is Line 3 DNE through:(last To) Mover ) (is Line 3 DSE through:(last To) Mover ) (is Line 3 DSW through:(last To) Mover )})
 			            									(and {
 			            	    	        					(addScore Mover 1)
 			            	    	        					(forget Value "LastScored" All)

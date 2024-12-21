@@ -14,8 +14,8 @@ public class CreateAIBattleClusterScripts
     {
         final int numPlayout = 100;
         final String clusterLogin = "epiette"; // Replace with your actual login
-        final String mainScriptName = "GenAIBattleTrials.sh";
-        final String mainRepoName = "AIBattle.sh";
+        final String mainScriptName = "GenAIBattle0.sh";
+        final String mainRepoName = "AIBattle0";
         final String playoutweight = "0.0";
         final String outputDirPath = "/Users/cedricantoine/Documents/GitHub/Ludii/Mining/src/utils_cedric"; // Replace with your desired directory path
         
@@ -32,26 +32,25 @@ public class CreateAIBattleClusterScripts
             "Real_Spava.lud",
             "Splade.lud",
             "Sparro.lud",
-            "Spaniel.lud"       
+            "Spaniel.lud",       
             
-//            "Span.lud",
-//            "Sponnect.lud",
-//            "Spight.lud",
-//            "Spice.lud",
-//            "Spaji.lud",
-//            
-//            "Spyramid.lud",
-//            
-//            "Spire.lud",
-//            "Spinimax.lud",
-//            "Splastwo.lud",
-//            
-//            "Sprite.lud",
-//            "Spirit.lud"
+            "Span.lud",
+            "Sponnect.lud",
+            "Spight.lud",
+            "Spice.lud",
+            "Spaji.lud",
+           
+            "Spyramid.lud",
+        
+            "Spire.lud",
+            "Spinimax.lud",
+            "Splastwo.lud",
+           
+            "Sprite.lud",
+            "Spirit.lud"
         );
 
         final List<String> aiAgents = Arrays.asList(
-        	// "algorithm=MAST;heuristics=/Users/cedricantoine/Downloads/AIBattles/topLayerProximity.txt;playout_value_weight=0.0"
             "UCT",
             "algorithm=UCT;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/centreProximity.txt;playout_value_weight=" + playoutweight,
             "algorithm=UCT;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/lineCompletionHeuristic.txt;playout_value_weight=" + playoutweight,
@@ -61,26 +60,25 @@ public class CreateAIBattleClusterScripts
             "algorithm=UCT;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/sidesProximity.txt;playout_value_weight=" + playoutweight,
             "algorithm=UCT;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/nullHeuristic.txt;playout_value_weight=" + playoutweight,
             "algorithm=UCT;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/topLayerProximity.txt;playout_value_weight=" + playoutweight,
-            
-            "MAST",
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/centreProximity.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/lineCompletionHeuristic.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/cornerProximity.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/influence.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/influenceAdvanced.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/sidesProximity.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/nullHeuristic.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MAST;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/topLayerProximity.txt;playout_value_weight=" + playoutweight,
-            
+            "algorithm=UCT;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/topANDline.txt;playout_value_weight=" + playoutweight,
+            "algorithm=UCT;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/topANDcentre.txt;playout_value_weight=" + playoutweight,
+            "Monte Carlo (flat)",
             "MC-GRAVE",
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/centreProximity.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/lineCompletionHeuristic.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/cornerProximity.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/influence.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/influenceAdvanced.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/sidesProximity.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/nullHeuristic.txt;playout_value_weight=" + playoutweight,
-            "algorithm=MC-GRAVE;heuristics=/home/ucl/ingi/epiette/" + mainRepoName + "/topLayerProximity.txt;playout_value_weight=" + playoutweight
+            "MC-BRAVE",
+            "UCB1Tuned",
+            "Score Bounded MCTS",
+            "Progressive History",
+            "Progressive Bias",
+            "MAST",
+            "NST",
+            "UCB1-GRAVE",
+            //"Biased MCTS",
+            //"Biased MCTS (Uniform Playouts)",
+            //"MCTS (Hybrid Selection)",
+            "Bandit Tree Search",
+            "EPT",
+            "EPT-QB",
+            "AlphaBeta"
         );
 
         final ArrayList<String> gameAgentPairs = new ArrayList<>();
@@ -88,8 +86,8 @@ public class CreateAIBattleClusterScripts
             for (String agent1 : aiAgents) {
                 for (String agent2 : aiAgents) {
                     if (!agent1.equals(agent2)) {
-                        gameAgentPairs.add(game + " " + agent1 + " " + agent2);
-                        gameAgentPairs.add(game + " " + agent2 + " " + agent1);
+                        gameAgentPairs.add(game + " | " + agent1 + " | " + agent2);
+                        gameAgentPairs.add(game + " | " + agent2 + " | " + agent1);
                     }
                 }
             }
@@ -113,7 +111,7 @@ public class CreateAIBattleClusterScripts
                     writer.println("#SBATCH -t 2880");
                     writer.println("#SBATCH -N 1");
                     writer.println("#SBATCH --cpus-per-task=128");
-                    writer.println("#SBATCH --mem=224G");
+                    writer.println("#SBATCH --mem=400G");
                     writer.println("#SBATCH --exclusive");
                     writer.println("module load Java/11.0.20");
 
@@ -121,7 +119,7 @@ public class CreateAIBattleClusterScripts
                     {
                         if ((i * 42 + j) < gameAgentPairs.size())
                         {
-                            final String[] parts = gameAgentPairs.get(i * 42 + j).split(" ");
+                            final String[] parts = gameAgentPairs.get(i * 42 + j).split(" \\| ");
                             final String gameName = parts[0];
                             final String agentName1 = parts[1];
                             final String agentName2 = parts[2];

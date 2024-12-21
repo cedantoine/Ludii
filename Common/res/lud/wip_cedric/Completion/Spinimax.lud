@@ -1,21 +1,21 @@
 (define "MinMajStacking"
 	(if 
-		(and (is Flat (site)) (and {(< (count SitesPlatformBelow P1) (count SitesPlatformBelow P2)) (< (count SitesPlatformBelow P1) (count SitesPlatformBelow P3))}))
+		(and (is Flat (site)) (and {(< (count SitesPlatformBelow who:P1) (count SitesPlatformBelow who:P2)) (< (count SitesPlatformBelow who:P1) (count SitesPlatformBelow who:P3))}))
 		(add (piece "Ball1") (to (site)))
 		(if 
-			(and (is Flat (site)) (and {(< (count SitesPlatformBelow P2) (count SitesPlatformBelow P1)) (< (count SitesPlatformBelow P2) (count SitesPlatformBelow P3))}))
+			(and (is Flat (site)) (and {(< (count SitesPlatformBelow who:P2) (count SitesPlatformBelow who:P1)) (< (count SitesPlatformBelow who:P2) (count SitesPlatformBelow who:P3))}))
 			(add (piece "Ball2") (to (site)))
 			(if 
-				(and (is Flat (site)) (and {(< (count SitesPlatformBelow P3) (count SitesPlatformBelow P1)) (< (count SitesPlatformBelow P3) (count SitesPlatformBelow P2))}))
+				(and (is Flat (site)) (and {(< (count SitesPlatformBelow who:P3) (count SitesPlatformBelow who:P1)) (< (count SitesPlatformBelow who:P3) (count SitesPlatformBelow who:P2))}))
 				(add (piece "Ball3") (to (site)))
 				(if 
-					(and (is Flat (site)) (and {(> (count SitesPlatformBelow P1) (count SitesPlatformBelow P2)) (> (count SitesPlatformBelow P1) (count SitesPlatformBelow P3))}))
+					(and (is Flat (site)) (and {(> (count SitesPlatformBelow who:P1) (count SitesPlatformBelow who:P2)) (> (count SitesPlatformBelow who:P1) (count SitesPlatformBelow who:P3))}))
 					(add (piece "Ball1") (to (site)))
 					(if 
-						(and (is Flat (site)) (and {(> (count SitesPlatformBelow P2) (count SitesPlatformBelow P1)) (> (count SitesPlatformBelow P2) (count SitesPlatformBelow P3))}))
+						(and (is Flat (site)) (and {(> (count SitesPlatformBelow who:P2) (count SitesPlatformBelow who:P1)) (> (count SitesPlatformBelow who:P2) (count SitesPlatformBelow who:P3))}))
 						(add (piece "Ball2") (to (site)))
 						(if 
-							(and (is Flat (site)) (and {(> (count SitesPlatformBelow P3) (count SitesPlatformBelow P1)) (> (count SitesPlatformBelow P3) (count SitesPlatformBelow P2))}))
+							(and (is Flat (site)) (and {(> (count SitesPlatformBelow who:P3) (count SitesPlatformBelow who:P1)) (> (count SitesPlatformBelow who:P3) (count SitesPlatformBelow who:P2))}))
 							(add (piece "Ball3") (to (site)))
 						)
 					)

@@ -28,18 +28,17 @@
 	    			(if (= (who at:(last To)) 1)
 	    				(move Add (piece 2)
     		    	    	(to 
-    		    	    		(sites Empty) 
+    		    	    		(intersection (sites Empty) (sites Around (last To))) 
     		    	    		if:(is Flat)
     		    	    	)
     		    	    )
 	    				(move Add (piece 1)
     		    	    	(to 
-    		    	    		(sites Empty) 
+		    	    			(intersection (sites Empty) (sites Around (last To))) 
     		    	    		if:(is Flat)
     		    	    	)
     		    	    )
-	    			)
-	    			
+	    			)	    			
 	    		)
 	    	)
 	    		
@@ -66,15 +65,15 @@
 		
 	(info
 		{
-		(description "")
-		(rules "")
+		(description "Spaji is a simple game for 2 players that can be played with a Series: Shibumi set. It uses a 4×4 set of stacking spheres in 2 colors.")
+		(rules "The board starts empty. Players take turns adding a white ball and a black ball each turn, in any order, at any playable points, provided that both balls touch. The game ends when the pyramid is complete. The owner of the largest visibly connected group wins. If tied, the second player (Black) wins.")
 		(source "<a href=\"http://www.nestorgames.com/rulebooks/SHIBUMI_EN.pdf\" target=\"_blank\" class=\"style1\" style=\"color: #0000EE\">SHIBUMI Rulebook</a>")
 	    (version "1.0.0")
 	    (classification "wip_cedric/Connection")
-	    (author "")
+	    (author "Néstoe Romeral Andrés")
 	    (publisher "Computational Creativity Group, nestorgames")
 	    (credit "Cédric Antoine")
-	    (date "")
+	    (date "2011")
 		}
 	)
     

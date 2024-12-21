@@ -59,75 +59,75 @@ public class NoStackOn extends MetaRule
 		final Game game = context.game();
 		final MetaRules metaRules = game.metaRules();
 		final NoStackOnType noStackOnType = metaRules.noStackOnType();
-		if (noStackOnType != null)                      
-        {                 
-//			System.out.println("Applying not on fallen");
-			final other.topology.Topology graph = context.topology();
-			for (int indexMove = legalMoves.moves().size() - 1; indexMove >= 0; indexMove--)
-			{
-				final Move move = legalMoves.moves().get(indexMove);
-				boolean forbiddenMove = false;
-				for(final Action action : move.actions()) {
-					if (action != null &&  action.actionType().equals(ActionType.Move))
-					{			
-						final int siteTo = action.to();
-						final int siteFrom = action.from();
-	//					System.out.println("From: " + action.from());
-	//					System.out.println("To: " + action.to());
-						
-						
-						
-											
-						final ContainerState cs = context.containerState(context.containerId()[siteTo]);
-						if (cs.what(siteFrom, SiteType.Vertex) != 0 && !context.equipment().containers()[context.containerId()[siteTo]].isHand())  // modif ced
-						{				
-							final List<Radial> radials = graph.trajectories().radials(SiteType.Vertex, siteFrom)
-									.distinctInDirection(AbsoluteDirection.Upward);
-							
-							for (final Radial radial : radials)
-							{
-	//							System.out.println("Radial: " + radial);
-								for (int indexPath = 1; indexPath < radial.steps().length; indexPath++)
+//		System.out.println(noStackOnType.toString());
+		if (noStackOnType != null) {   
+			if (noStackOnType.equals(NoStackOnType.Fallen))
+	        {                 
+	//			System.out.println("Applying not on fallen");
+				final other.topology.Topology graph = context.topology();
+				for (int indexMove = legalMoves.moves().size() - 1; indexMove >= 0; indexMove--)
+				{
+					final Move move = legalMoves.moves().get(indexMove);
+					boolean forbiddenMove = false;
+					for(final Action action : move.actions()) {
+						if (action != null &&  action.actionType().equals(ActionType.Move))
+						{			
+							final int siteTo = action.to();
+							final int siteFrom = action.from();
+		//					System.out.println("From: " + action.from());
+		//					System.out.println("To: " + action.to());
+																	
+							final ContainerState cs = context.containerState(context.containerId()[siteTo]);
+							if (cs.what(siteFrom, SiteType.Vertex) != 0 && !context.equipment().containers()[context.containerId()[siteTo]].isHand())  // modif ced
+							{				
+								final List<Radial> radials = graph.trajectories().radials(SiteType.Vertex, siteFrom)
+										.distinctInDirection(AbsoluteDirection.Upward);
+								
+								for (final Radial radial : radials)
 								{
-									final int index = radial.steps()[indexPath].id();
-	//								System.out.println("Index: " + index);
-									if (siteTo == index) {
-										forbiddenMove = true;
-										break;
-									}
-									
-								}	
-								
-								final List<Radial> oppositeRadials = radial.opposites();
-								
-								if (oppositeRadials != null) {
-									for (final Radial oppositeRadial : oppositeRadials)
+		//							System.out.println("Radial: " + radial);
+									for (int indexPath = 1; indexPath < radial.steps().length; indexPath++)
 									{
-	//									System.out.println("Radial: " + oppositeRadial);
-										for (int indexPath = 1; indexPath < oppositeRadial.steps().length; indexPath++)
-										{
-											final int index = oppositeRadial.steps()[indexPath].id();
-	//										System.out.println("Index: " + index);
-											if (siteTo == index) {
-												forbiddenMove = true;
-												break;
-											}
-											
-										}	
+										final int index = radial.steps()[indexPath].id();
+		//								System.out.println("Index: " + index);
+										if (siteTo == index) {
+											forbiddenMove = true;
+											break;
+										}
 										
-									}
-								}		
-							}									
+									}	
+									
+									final List<Radial> oppositeRadials = radial.opposites();
+									
+									if (oppositeRadials != null) {
+										for (final Radial oppositeRadial : oppositeRadials)
+										{
+		//									System.out.println("Radial: " + oppositeRadial);
+											for (int indexPath = 1; indexPath < oppositeRadial.steps().length; indexPath++)
+											{
+												final int index = oppositeRadial.steps()[indexPath].id();
+		//										System.out.println("Index: " + index);
+												if (siteTo == index) {
+													forbiddenMove = true;
+													break;
+												}
+												
+											}	
+											
+										}
+									}		
+								}									
+							}
 						}
 					}
+					if (forbiddenMove) {
+		//				System.out.println("Removed");
+		//				System.out.println("--------");
+						legalMoves.moves().remove(indexMove);
+					}
+		//			System.out.println("NotRemoved");
+		//			System.out.println("--------");
 				}
-				if (forbiddenMove) {
-	//				System.out.println("Removed");
-	//				System.out.println("--------");
-					legalMoves.moves().remove(indexMove);
-				}
-	//			System.out.println("NotRemoved");
-	//			System.out.println("--------");
 			}
 		}
 	}

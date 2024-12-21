@@ -129,7 +129,8 @@ public class TravisTest
 			// Get game description from resource
 			// System.out.println("Game: " + filePath);
 			
-//			filePath = "/lud/wip_cedric/Counting/Spirit.lud";
+			filePath = "/lud/wip_cedric/Connection/Spaji.lud";
+//			filePath = "/lud/board/space/blocking/Quantum Leap.lud";
 
 			String path = filePath.replaceAll(Pattern.quote("\\"), "/");
 			path = path.substring(path.indexOf("/lud/"));

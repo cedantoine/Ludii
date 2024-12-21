@@ -772,16 +772,24 @@ public class Trajectories
 					// now is that we have to adjust the threshold that we compare to; originally,
 					// we wanted a threshold absolute angle difference of at most 0.25rad. Now, 
 					// we'll have to change that to a threshold of tan(0.25).
-					final double absTanDiff = MathRoutines.absTanAngleDifferencePosX
+					
+					final double absTanDiff = MathRoutines.absTanAngleDifference3D
 									(
-										previous.pt2D(), current.pt2D(), nextTo.pt2D()
+										previous.pt(), current.pt(), nextTo.pt()
 									);
+					
+					
+//					final double absTanDiff = MathRoutines.absTanAngleDifferencePosX
+//							(
+//								previous.pt2D(), current.pt2D(), nextTo.pt2D()
+//							);					
+					
 					if (absTanDiff < bestAbsTanDiff)	// comparison to threshold is implicit due to init of bestAbsTanDiff
 					{
 						bestAbsTanDiff = absTanDiff;
 						bestsNextTo = new ArrayList<GraphElement>();
 						bestsNextTo.add(nextTo);
-						if (bestAbsTanDiff == 0.0 && current.pt().z() == nextTo.pt().z()) {  // 
+						if (bestAbsTanDiff == 0.0) {  //&& current.pt().z() == nextTo.pt().z()) {  // 
 //							System.out.println("I arrived here");
 							break;
 						}

@@ -94,6 +94,7 @@ public class AIFactory
 	 */
 	public static AI createAI(final String string)
 	{
+//		System.out.println(string);
 		if (string.equalsIgnoreCase("Random"))
 			return new RandomAI();
 		
@@ -723,7 +724,8 @@ public class AIFactory
 			bestAgent = "UCT";
 		
 		if (game.metadata().ai().agent() != null)
-		{
+		{	
+//			System.out.println(game.metadata().ai().agent().toString());
 			return fromDefAgent(game.metadata().ai().agent());
 		}
 		

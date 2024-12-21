@@ -3,6 +3,7 @@ package game.functions.ints.count;
 import annotations.Name;
 import annotations.Opt;
 import annotations.Or;
+import annotations.Or2;
 import game.Game;
 import game.functions.booleans.BooleanFunction;
 import game.functions.intArray.IntArrayFunction;
@@ -213,12 +214,14 @@ public final class Count extends BaseIntFunction
 	 */
 	public static IntFunction construct
 	(
-		@Opt           final CountSiteType  countType, 
-		@Opt           final SiteType 		type,
-		@Opt @Or @Name final RegionFunction in, 
-		@Opt @Or @Name final IntFunction 	at, 
-		@Opt @Or       final String 		name,
-		@Opt		   final RoleType 		who
+		@Opt            final CountSiteType  countType, 
+		@Opt            final SiteType 		type,
+		@Opt @Or @Name  final RegionFunction in, 
+		@Opt @Or @Name  final IntFunction 	at, 
+		@Opt @Or        final String 		name,
+		@Opt	  @Name final RoleType 		who,
+		@Opt @Or2 @Name final IntFunction 	what,
+		@Opt @Or2 @Name final IntFunction[] whats
 		
 	)
 	{
@@ -236,7 +239,6 @@ public final class Count extends BaseIntFunction
 
 		if (countType == null)
 			return new CountNumber(type, in, at);
-
 		switch (countType)
 		{
 		case Adjacent:
@@ -252,7 +254,7 @@ public final class Count extends BaseIntFunction
 		case Sites:
 			return new CountSites(in, at, name);
 		case SitesPlatformBelow:
-			return new CountSitesPlatformBelow(type, at, who);
+			return new CountSitesPlatformBelow(type, at, who, what, whats);
 		default:
 			break;
 		}
@@ -334,6 +336,7 @@ public final class Count extends BaseIntFunction
 			       final CountGroupsType   countType,
 		@Opt 	   final SiteType          type,
 		@Opt       final Direction         directions,
+		@Opt	   final RegionFunction  throughAny,
 		@Opt @Name final BooleanFunction   If,
 		@Opt @Name final IntFunction       min,
 		@Opt @Name final BooleanFunction   isVisible
@@ -344,7 +347,7 @@ public final class Count extends BaseIntFunction
 		case Groups:
 			return new CountGroups(type, directions, If, min);
 		case SizeBiggestGroup:
-			return new CountSizeBiggestGroup(type, directions, If, isVisible);
+			return new CountSizeBiggestGroup(type, directions, throughAny, If, isVisible);
 		default:
 			break;
 		}

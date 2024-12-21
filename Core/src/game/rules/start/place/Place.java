@@ -5,6 +5,7 @@ import annotations.Opt;
 import annotations.Or;
 import annotations.Or2;
 import game.Game;
+import game.functions.booleans.BooleanConstant;
 import game.functions.ints.IntFunction;
 import game.functions.region.RegionFunction;
 import game.rules.Rule;
@@ -205,10 +206,11 @@ public final class Place extends StartRule
 			@Opt @Name final IntFunction     count,
 			@Opt @Name final IntFunction 	 state,
 			@Opt @Name final IntFunction 	 value,
-		    @Opt 	   final SiteType        type
+		    @Opt 	   final SiteType        type,
+		    @Opt 	   final BooleanConstant randPiecOrder
 	)
 	{
-		return new PlaceRandom(region, item, count, value, state, type);
+		return new PlaceRandom(region, item, count, value, state, type, randPiecOrder);
 	}
 	
 	//-------------------------------------------------------------------------

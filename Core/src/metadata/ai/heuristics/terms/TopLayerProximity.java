@@ -94,7 +94,8 @@ public class TopLayerProximity extends HeuristicTerm
     @Override
     public float computeValue(final Context context, final int player, final float absWeightThreshold)
     {
-        final Owned owned = context.state().owned();
+        final Owned owned = context.state().owned();		
+        final other.topology.Topology graph = context.topology();
         final List<? extends Location>[] pieces = owned.positions(player);
 
         float value = 0.f;
@@ -110,8 +111,11 @@ public class TopLayerProximity extends HeuristicTerm
             {
                 for (final Location position : pieces[i])
                 {
-                	final int layer = context.topology().vertices().get(position.site()).layer();			
-                    value += pieceWeight * layer; // Favor higher layers
+                	final int site = position.site();
+					if (site >= graph.vertices().size())	// Different container, skip it
+						continue;                	
+                	final int layer = context.topology().vertices().get(site).layer();			
+                    value += pieceWeight * layer; // Favor higher layers               
                 }
             }
         }
@@ -126,6 +130,7 @@ public class TopLayerProximity extends HeuristicTerm
     {
         final FVector featureVector = new FVector(pieceWeights.dim());
         final Owned owned = context.state().owned();
+        final other.topology.Topology graph = context.topology();
         final List<? extends Location>[] pieces = owned.positions(player);
 
         for (int i = 0; i < pieces.length; ++i)
@@ -134,6 +139,9 @@ public class TopLayerProximity extends HeuristicTerm
 
             for (final Location position : pieces[i])
             {
+            	final int site = position.site();
+            	if (site >= graph.vertices().size())	// Different container, skip it
+					continue;
                 final int layer = context.topology().vertices().get(position.site()).layer();
                 featureVector.addToEntry(compIdx, layer); // Add layer to feature vector
             }

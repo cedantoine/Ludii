@@ -22,7 +22,7 @@ import java.util.List;
 public class AIBattle {
 
     private static final int moveLimit = Constants.DEFAULT_MOVES_LIMIT; // Default move limit
-    private static final double[] maxTurnTimes = {1.0}; // Different max turn times
+    private static final double[] maxTurnTimes = {0.1, 0.25, 0.5, 1.0, 2.0}; // Different max turn times
 
     /**
      * Main method to set up AI matches and obtain results.
@@ -113,7 +113,7 @@ public class AIBattle {
      * Saves the results to a CSV file.
      */
     private static void saveResultsToCSV(final int[] results, final String outputDir, final String gameName, final String agentName1, final String agentName2, final double maxTurnTime) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(outputDir + "/AIBattleResults.csv", true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(outputDir + "/AIBattleResults0.csv", true))) {
             
             String sanitizedAgentName1 = formatAgentName(agentName1);
             String sanitizedAgentName2 = formatAgentName(agentName2);
