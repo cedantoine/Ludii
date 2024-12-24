@@ -135,9 +135,6 @@ public class CentreProximity extends HeuristicTerm
 					
 //					System.out.println("Test");
 					final int dist = distances[site];
-					for (int o:distances) {
-//						System.out.println(String.valueOf(o));
-					}
 					
 					final float proximity = 1.f - ((float) dist / maxDistance);
 					value += pieceWeight * proximity;

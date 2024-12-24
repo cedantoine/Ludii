@@ -20,6 +20,7 @@ import game.functions.booleans.is.angle.IsReflex;
 import game.functions.booleans.is.angle.IsRight;
 import game.functions.booleans.is.component.IsThreatened;
 import game.functions.booleans.is.component.IsWithin;
+import game.functions.booleans.is.component.IsFreedom;
 import game.functions.booleans.is.connect.IsBlocked;
 import game.functions.booleans.is.connect.IsConnected;
 import game.functions.booleans.is.edge.IsCrossing;
@@ -237,7 +238,7 @@ public class Is extends BaseBooleanFunction
 	 */
 	public static BooleanFunction construct
 	(
-		               final IsPatternType isType,
+		               	final IsPatternType isType,
 		     @Opt       final StepType[]    walk,
              @Opt       final SiteType      type,
         @Or2 @Opt @Name final IntFunction   from,
@@ -658,7 +659,6 @@ public class Is extends BaseBooleanFunction
 		if (numNonNull > 1)
 			throw new IllegalArgumentException(
 					"Is(): With IsComponentType only one 'site' or 'sites' parameter must be non-null.");
-
 		switch (isType)
 		{
 		case Threatened:
@@ -1117,6 +1117,45 @@ public class Is extends BaseBooleanFunction
 		// We should never reach that except if we forget some codes.
 		throw new IllegalArgumentException("Is(): A IsInType is not implemented.");
 	}
+	
+	//-------------------------------------------------------------------------
+
+		/**
+		 * For tests relative to a group.
+		 * 
+		 * @param isType The type of query to perform.
+		 * @param in  The locations of the piece to check.
+		 * @param toPlace  Check if still freedom if a piece is placed at this position
+		 * 
+		 * @example (is Threatened (id "King" Mover) at:(to))
+		 */
+		public static BooleanFunction construct
+		(
+					final IsGroupType   	isType,
+			@Opt  	final SiteType    		type,
+					final RegionFunction  	in,
+			@Opt    final IntFunction       toPlace
+		)
+		{
+//			System.out.println("Here");
+			int numNull = 0;
+			if (in == null)
+				numNull++;
+			
+			if (numNull >= 1)
+				throw new IllegalArgumentException(
+						"Is(): With IsGroup only no parameter must be non-null.");
+			switch (isType)
+			{
+			case Freedom:
+				return new IsFreedom(type, in, toPlace);
+			default:
+				break;
+			}
+
+			// We should never reach that except if we forget some codes.
+			throw new IllegalArgumentException("Is(): A IsGroupType is not implemented.");
+		}
 
 	//-------------------------------------------------------------------------
 	

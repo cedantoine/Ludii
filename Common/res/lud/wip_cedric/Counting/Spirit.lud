@@ -14,13 +14,13 @@
 	        				(size Array 
 	        					(array
 	        						(intersection { 
-	        							(sites Free) 
+	        							(difference (sites Occupied by:All) (sites Support)) 
 	        							(sites Occupied by:Mover) 
 	        							(union {
 	        								(sites Direction from:(to) N) 
-	        								 (sites Direction from:(to) S) 
-	        								 (sites Direction from:(to) E) 
-	        								 (sites Direction from:(to) W)
+	        								(sites Direction from:(to) S) 
+	        								(sites Direction from:(to) E) 
+	        								(sites Direction from:(to) W)
 	        							})
 	        						})
 	        					)

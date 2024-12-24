@@ -6,6 +6,7 @@ import java.util.List;
 import annotations.Hide;
 import annotations.Opt;
 import game.Game;
+import game.functions.ints.IntFunction;
 import game.functions.region.BaseRegionFunction;
 import game.types.board.SiteType;
 import game.util.directions.AbsoluteDirection;
@@ -16,30 +17,35 @@ import other.topology.TopologyElement;
 import gnu.trove.list.array.TIntArrayList;
 
 /**
- * Returns the free (i.e. with no pieces on top) sites of a container.
+ * Returns the sites which are supporting other pieces on sites on top of them.
  * 
  * @author Cedric Antoine
  */
 
 @Hide
-public final class SitesFree extends BaseRegionFunction
+public final class SitesSupport extends BaseRegionFunction
 {
 	private static final long serialVersionUID = 1L;
+	
+	/** piece type to be supported. */
+	private IntFunction locnFn;
 
 	//-------------------------------------------------------------------------
 
 	/**
 	 * @param type Type of graph element [default SiteType of the board].
 	 * 
-	 * @example (free)
+	 * @example (sites Support)
 	 */
 	
-	public SitesFree
+	public SitesSupport
 	(
-		@Opt final SiteType type
+		@Opt final SiteType type,
+		@Opt final IntFunction what
 	)
 	{
 		this.type = type;
+		locnFn = (what != null) ? what : null;
 	}
 
 	//-------------------------------------------------------------------------
@@ -47,6 +53,8 @@ public final class SitesFree extends BaseRegionFunction
 	@Override
 	public Region eval(final Context context)
 	{
+		
+		int value = (locnFn!= null) ? locnFn.eval(context) : -1;
 		final TopologyElement vertexLoc = context.topology().vertices().get(0);
 		final ContainerState state = context.state().containerStates()[context.containerId()[vertexLoc.index()]];
 		final List<? extends TopologyElement> sites = context.topology().getGraphElements(type);
@@ -55,7 +63,6 @@ public final class SitesFree extends BaseRegionFunction
 		for (final TopologyElement site : sites) {
 			List<game.util.graph.Step> unw = context.game().board().topology().trajectories()
 					.steps(type, site.index(), type, AbsoluteDirection.UNW);
-			
 			List<game.util.graph.Step> usw = context.game().board().topology().trajectories()
 					.steps(type, site.index(), type, AbsoluteDirection.USW);
 			List<game.util.graph.Step> une = context.game().board().topology().trajectories()
@@ -63,12 +70,42 @@ public final class SitesFree extends BaseRegionFunction
 			List<game.util.graph.Step> use = context.game().board().topology().trajectories()
 					.steps(type, site.index(), type, AbsoluteDirection.USE);
 			
-			if ((unw.isEmpty() || (!unw.isEmpty() && state.what(unw.get(0).to().id(),type) == 0)) &&
-				    (usw.isEmpty() || (!usw.isEmpty() && state.what(usw.get(0).to().id(),type) == 0)) &&
-				    (une.isEmpty() || (!une.isEmpty() && state.what(une.get(0).to().id(),type) == 0)) &&
-				    (use.isEmpty() || (!use.isEmpty() && state.what(use.get(0).to().id(),type) == 0))) {
-				    sites_free.add(site.index());
-				}
+			boolean hasValidDirection = false;
+
+			if (value == -1) {
+			    // Original logic when value is -1
+			    if (!unw.isEmpty() && state.what(unw.get(0).to().id(), type) != 0) {
+			        hasValidDirection = true;
+			    }
+			    if (!usw.isEmpty() && state.what(usw.get(0).to().id(), type) != 0) {
+			        hasValidDirection = true;
+			    }
+			    if (!une.isEmpty() && state.what(une.get(0).to().id(), type) != 0) {
+			        hasValidDirection = true;
+			    }
+			    if (!use.isEmpty() && state.what(use.get(0).to().id(), type) != 0) {
+			        hasValidDirection = true;
+			    }
+			} else if (value >= 0) {
+			    // New logic when value is positive
+			    if (!unw.isEmpty() && state.what(unw.get(0).to().id(), type) == value) {
+			        hasValidDirection = true;
+			    }
+			    if (!usw.isEmpty() && state.what(usw.get(0).to().id(), type) == value) {
+			        hasValidDirection = true;
+			    }
+			    if (!une.isEmpty() && state.what(une.get(0).to().id(), type) == value) {
+			        hasValidDirection = true;
+			    }
+			    if (!use.isEmpty() && state.what(use.get(0).to().id(), type) == value) {
+			        hasValidDirection = true;
+			    }
+			}
+
+			// Add to sites_free if at least one valid direction exists
+			if (hasValidDirection) {
+			    sites_free.add(site.index());
+			}
 		}
 		
 		int[] free_s = sites_free.toArray();
