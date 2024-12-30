@@ -1,10 +1,11 @@
-(game "Spargo" 
+(game "Margo" 
     (players 2) 
     (equipment { 
-        (board (square 4 pyramidal:True) use:Vertex) 
-        (piece "Ball" Each) 
+        (board (square 6 pyramidal:True) use:Vertex) 
+        (piece "Ball" Each maxCount:36) 
     }) 
     (rules
+    	(meta {(swap)})
         (play
     		(move Add 
         		(to (sites Empty) 
@@ -88,19 +89,19 @@
 
 (metadata 
 		
-		(info
-			{
-			(description "Spargo is 3D Go that can be played with a Series: Shibumi set. It uses a 4x4 holes board and balls in 2 colours.")
-			(rules "Two players, White and Black, take turns placing a piece of their colour on an empty board hole or stacked on four pieces. Any group with no freedom (adjacent empty board hole) is captured and removed, except that balls that support other balls are not removed. Other Go rules apply, except that passing is not allowed. The game ends when a player has no legal moves. The player with the most marbles in play wins.")
-			(source "<a href=\"http://www.nestorgames.com/rulebooks/SHIBUMI_EN.pdf\" target=\"_blank\" class=\"style1\" style=\"color: #0000EE\">SHIBUMI Rulebook</a>")
-		    (version "1.0.0")
-		    (classification "wip_cedric/Capture")
-		    (author "Cameron Browne")
-		    (publisher "Computational Creativity Group, nestorgames")
-		    (credit "Cédric Antoine")
-		    (date "2006-2011")
-			}
-		)
+	(info
+		{
+		(description "Margo is a board game similar to Go, played with marbles which may stack upwards. A special capture rule means that pinned pieces survive capture as zombies.")
+		(rules "Two players, White and Black, each have at least enough marbles of their colour to cover the board. Start: The board is initially empty. White places the first piece at any board point, then Black may elect to swap colours in lieu of making the next move (swap rule). Play: Players then take turns placing a piece of their colour either: 1) at an empty board point, or 2) stacked on top of four existing pieces (of any colour). Players may not pass. Over/Under Rule: A connection crossing over an enemy connection cuts it. Each group therefore consists of a visibly connected set of pieces when viewed from above. It is not permitted to place a piece without freedom, unless that move captures neighbours to create its own freedom. It is not permitted to repeat the board position of the previous turn. The game ends when the current player has no legal move. The player with the most pieces in play wins (draw if equal).")
+		(source "<a href=\"https://nestorgames.com/rulebooks/MARGO_EN.pdf\" target=\"_blank\" class=\"style1\" style=\"color: #0000EE\">SHIBUMI Rulebook</a>")
+	    (version "1.0.0")
+	    (classification "wip_cedric/Capture")
+	    (author "Cameron Browne")
+	    (publisher "Computational Creativity Group, nestorgames")
+	    (credit "Cédric Antoine")
+	    (date "2006")
+		}
+	)
     
 	(graphics {
 		(piece Scale "Ball" 1.0)

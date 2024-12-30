@@ -49,7 +49,7 @@ public final class CountSitesPlatformBelow extends BaseIntFunction
 	//-------------------------------------------------------------------------
 
 	/**
-	 * @param type       		The graph element type [default SiteType of the board].
+	 * @param type      The graph element type [default SiteType of the board].
 	 * @param site 		The site to check [(to)].
 	 * @param who  		Player id the counted items belong to
 	 * @param what  	Piece id of the counted items
@@ -58,7 +58,7 @@ public final class CountSitesPlatformBelow extends BaseIntFunction
 	public CountSitesPlatformBelow
 	(
 		@Opt        	final SiteType type,
-		@Opt    @Name	final IntFunction site,
+		@Opt    	final IntFunction site,
 		@Opt	@Or	@Name	final RoleType who,
 			@Opt	@Or @Name   final IntFunction what,
 			@Opt	@Or @Name 	final IntFunction[] whats

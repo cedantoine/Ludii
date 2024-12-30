@@ -51,7 +51,7 @@ public final class SitesGroup extends BaseRegionFunction
 	/** Direction chosen. */
 	private final DirectionsFunction dirnChoice;
 	
-	/** The condition */
+	/** The condition of visibility of group members */
 	private final BooleanFunction isVisibleFn;
 
 	/**
@@ -98,14 +98,25 @@ public final class SitesGroup extends BaseRegionFunction
 		for(final int from : froms)
 		{
 			final TIntArrayList groupSites = new TIntArrayList();
+			
+			boolean fromCovered = false;
+			if (isVisibleFn != null && isVisibleFn.eval(context) == true && !context.equipment().containers()[context.containerId()[from]].isHand()) {
+				for(final TopologyElement temp_elem : sites) {
+					TopologyElement to_elem = sites.get(from);
+					if (temp_elem.centroid3D().x() == to_elem.centroid3D().x() && temp_elem.centroid3D().y() == to_elem.centroid3D().y() && temp_elem.index() > to_elem.index()) {
+						if(cs.what(temp_elem.index(), type) != 0)
+							fromCovered = true;
+					}
+				}
+			}
 	
 			context.setTo(from);
-	
-			if (condition == null || condition.eval(context))
+			
+			if ((condition == null && !fromCovered) || (condition != null && condition.eval(context) && !fromCovered))
 					groupSites.add(from);
-	
+			
 			final int what = cs.what(from, type);
-	
+			
 			if (groupSites.size() > 0)
 			{
 				context.setFrom(from);

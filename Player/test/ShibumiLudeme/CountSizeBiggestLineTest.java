@@ -14,7 +14,6 @@ import org.junit.Test;
 import compiler.Compiler;
 import game.Game;
 import game.functions.ints.count.sizeBiggestLine.CountSizeBiggestLine;
-import game.functions.ints.IntConstant;
 import main.FileHandling;
 import main.grammar.Description;
 import manager.utils.game_logs.MatchRecord;
