@@ -315,6 +315,7 @@ public class Trial implements Serializable
 		}
 
 		this.legalMoves = legalMoves;
+//		System.out.print(legalMoves.moves().size() + ", ");
 
 		if (auxilTrialData != null)
 			auxilTrialData.updateNewLegalMoves(legalMoves, context);

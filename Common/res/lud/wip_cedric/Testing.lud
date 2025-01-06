@@ -12,6 +12,12 @@
 	        		(to (sites Empty) 
 	        			if:(is Flat)
 	                )
+	        		(then
+	        			(or
+	        				(add (piece "Ball1") (to 1))
+	        				(add (piece "Ball1") (to 2))
+	        			)
+	        		)
         		)
         		(move
                 	(from (sites Occupied by:Mover))

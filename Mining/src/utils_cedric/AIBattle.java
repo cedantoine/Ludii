@@ -22,7 +22,7 @@ import java.util.List;
 public class AIBattle {
 
     private static final int moveLimit = Constants.DEFAULT_MOVES_LIMIT; // Default move limit
-    private static final double[] maxTurnTimes = {0.1, 0.25, 0.5, 1.0, 2.0}; // Different max turn times
+    private static final double[] maxTurnTimes = {0.5}; // Different max turn times
 
     /**
      * Main method to set up AI matches and obtain results.
@@ -89,6 +89,9 @@ public class AIBattle {
             while (!trial.over() && trial.numMoves() < moveLimit) {
                 model.startNewStep(context, ais, maxTurnTime);
             }
+            
+//            System.out.println();
+//            System.out.println("----------------------NEW TRIAL----------------------");
 
             // Determine result
             final int winner = trial.status().winner();
@@ -125,6 +128,8 @@ public class AIBattle {
     }
 
     private static String formatAgentName(String agentName) {
+        StringBuilder formattedName = new StringBuilder();
+
         if (agentName.contains("algorithm=") && agentName.contains("heuristics=")) {
             // Extraire la partie après "algorithm=" et avant le premier point-virgule
             String algorithm = agentName.split("algorithm=")[1].split(";")[0];
@@ -132,13 +137,22 @@ public class AIBattle {
             String heuristicsPath = agentName.split("heuristics=")[1].split(";")[0];
             // Extraire le nom de fichier sans le chemin complet
             String heuristics = heuristicsPath.substring(heuristicsPath.lastIndexOf('/') + 1, heuristicsPath.lastIndexOf('.'));
-            // Retourner le format souhaité
-            return algorithm + "-" + heuristics;
+            // Ajouter algorithm et heuristics au nom formaté
+            formattedName.append(algorithm).append("-").append(heuristics);
         } else {
             // Retourner le nom tel quel si aucun format avancé n'est détecté
             return agentName;
         }
+
+        // Ajouter "backprop" si présent
+        if (agentName.contains("backprop=")) {
+            String backprop = agentName.split("backprop=")[1].split(";")[0];
+            formattedName.append("-").append(backprop);
+        }
+
+        return formattedName.toString();
     }
+
 
 
 }
