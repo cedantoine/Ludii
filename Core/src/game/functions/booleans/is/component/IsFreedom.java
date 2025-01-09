@@ -95,8 +95,6 @@ public final class IsFreedom extends BaseBooleanFunction
 				final other.topology.Vertex v = context.topology().vertices().get(neigh);
 				final int lay = v.layer();
 				if (neigh != pid && what == 0 && lay == 0) {
-//					System.out.println(neigh);
-//					System.out.println(what);
 					return true;
 				}				
 			}
@@ -141,7 +139,6 @@ public final class IsFreedom extends BaseBooleanFunction
 		if (locnFn != null)
 			concepts.or(locnFn.concepts(game));
 		concepts.or(region.concepts(game));
-		concepts.or(SiteType.concepts(type));
 		return concepts;
 	}
 
@@ -197,7 +194,7 @@ public final class IsFreedom extends BaseBooleanFunction
 	@Override
 	public String toEnglish(final Game game) 
 	{
-		return locnFn.toEnglish(game)+ " is in "+ region.toEnglish(game);
+		return locnFn.toEnglish(game)+ " is freedom in " + region.toEnglish(game);
 
 	}
 }

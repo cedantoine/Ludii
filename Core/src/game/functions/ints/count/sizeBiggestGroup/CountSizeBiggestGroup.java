@@ -22,7 +22,6 @@ import game.util.directions.Direction;
 import game.util.graph.Step;
 import gnu.trove.list.array.TIntArrayList;
 import other.context.Context;
-import other.context.EvalContextData;
 import other.state.container.ContainerState;
 import other.topology.Topology;
 import other.topology.TopologyElement;
@@ -31,7 +30,7 @@ import java.util.ArrayList;
 
 
 /**
- * Returns the size of the biggest Group
+ * Returns the size of the biggest Group on the board
  * 
  * @author Eric.Piette & Cedric.Antoine
  */
@@ -305,6 +304,8 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 			gameFlags |= isVisibleFn.gameFlags(game);
 		if (dirnChoice != null)
 			gameFlags |= dirnChoice.gameFlags(game);
+		if (throughAny != null)
+			gameFlags |= throughAny.gameFlags(game);
 		return gameFlags;
 	}
 
@@ -318,6 +319,8 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 			concepts.or(dirnChoice.concepts(game));
 		if (isVisibleFn != null)
 			concepts.or(isVisibleFn.concepts(game));
+		if (throughAny != null)
+			concepts.or(throughAny.concepts(game));
 		
 		return concepts;
 	}
@@ -331,17 +334,12 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 			writeEvalContext.or(dirnChoice.writesEvalContextRecursive());
 		if (isVisibleFn != null)
 			writeEvalContext.or(isVisibleFn.writesEvalContextRecursive());
+		if (throughAny != null)
+			writeEvalContext.or(throughAny.writesEvalContextRecursive());
+		
 		return writeEvalContext;
 	}
 	
-	@Override
-	public BitSet writesEvalContextFlat()
-	{
-		final BitSet writeEvalContext = new BitSet();
-		writeEvalContext.set(EvalContextData.To.id(), true);
-		return writeEvalContext;
-	}
-
 	@Override
 	public BitSet readsEvalContextRecursive()
 	{
@@ -351,6 +349,9 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 			readEvalContext.or(dirnChoice.readsEvalContextRecursive());
 		if (isVisibleFn != null)
 			readEvalContext.or(isVisibleFn.readsEvalContextRecursive());
+		if (throughAny != null)
+			readEvalContext.or(throughAny.readsEvalContextRecursive());
+		
 		return readEvalContext;
 	}
 
@@ -363,6 +364,8 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 			dirnChoice.preprocess(game);
 		if (isVisibleFn != null)
 			isVisibleFn.preprocess(game);
+		if (throughAny != null)
+			throughAny.preprocess(game);
 	}
 
 	@Override
@@ -374,6 +377,9 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 			missingRequirement |= dirnChoice.missingRequirement(game);
 		if (isVisibleFn != null)
 			missingRequirement |= isVisibleFn.missingRequirement(game);
+		if (throughAny != null)
+			missingRequirement |= throughAny.missingRequirement(game);
+		
 		return missingRequirement;
 	}
 
@@ -385,6 +391,9 @@ public final class CountSizeBiggestGroup extends BaseIntFunction
 			willCrash |= condition.willCrash(game);
 		if (isVisibleFn != null)
 			willCrash |= isVisibleFn.willCrash(game);
+		if (throughAny != null)
+			willCrash |= throughAny.willCrash(game);
+		
 		return willCrash;
 	}
 	

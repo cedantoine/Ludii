@@ -270,8 +270,6 @@ public final class IsPyramidCorners extends BaseBooleanFunction
 		if (!eval(context))
 			return new ArrayList<Location>();
 
-//		final List<Location> winningSites = new ArrayList<Location>();
-
 		return new ArrayList<Location>();
 	}
 	

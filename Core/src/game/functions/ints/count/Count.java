@@ -358,13 +358,13 @@ public final class Count extends BaseIntFunction
 	//-------------------------------------------------------------------------
 
 		/**
-		 * For counting elements in a group.
+		 * For counting elements in a line.
 		 * 
 		 * @param countType  The property to count.
 		 * @param type       The graph element type [default SiteType of the board].
 		 * @param directions The directions of the connection between elements in the
-		 *                   group [Adjacent].
-		 * @param If         The condition on the pieces to include in the group [(is Occupied (to))].
+		 *                   line [Adjacent].
+		 * @param If         The condition on the pieces to include in the line [(is Occupied (to))].
 		 * 
 		 * @example (count SizeBiggestLine Orthogonal)
 		 */

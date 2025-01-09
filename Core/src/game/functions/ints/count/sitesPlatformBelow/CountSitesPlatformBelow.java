@@ -23,7 +23,7 @@ import other.state.container.ContainerState;
 import other.topology.Topology;
 
 /**
- * Returns the number of groups.
+ * Returns the number of specific pieces on sites below a given site.
  * 
  * @author Eric.Piette & Cedric.Antoine
  */
@@ -182,6 +182,8 @@ public final class CountSitesPlatformBelow extends BaseIntFunction
 		if (whatFn != null)
 			for (final IntFunction what : whatFn)
 				writeEvalContext.or(what.writesEvalContextRecursive());
+		if (siteFn != null)
+			writeEvalContext.or(siteFn.writesEvalContextRecursive());
 		return writeEvalContext;
 	}
 

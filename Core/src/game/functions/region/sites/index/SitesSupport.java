@@ -34,6 +34,7 @@ public final class SitesSupport extends BaseRegionFunction
 
 	/**
 	 * @param type Type of graph element [default SiteType of the board].
+	 * @param what The type of pieces to be supported by the sites looked for.
 	 * 
 	 * @example (sites Support)
 	 */
@@ -135,6 +136,8 @@ public final class SitesSupport extends BaseRegionFunction
 	public long gameFlags(final Game game)
 	{
 		long gameFlags = SiteType.gameFlags(type);
+		if (locnFn != null)
+			gameFlags |= locnFn.gameFlags(game);
 
 		return gameFlags;
 	}
@@ -144,6 +147,9 @@ public final class SitesSupport extends BaseRegionFunction
 	{
 		final BitSet concepts = new BitSet();
 		concepts.or(SiteType.concepts(type));
+		if (locnFn != null)
+			concepts.or(locnFn.concepts(game));
+		
 		return concepts;
 	}
 
@@ -151,6 +157,9 @@ public final class SitesSupport extends BaseRegionFunction
 	public BitSet writesEvalContextRecursive()
 	{
 		final BitSet writeEvalContext = new BitSet();
+		if (locnFn != null)
+			writeEvalContext.or(locnFn.writesEvalContextRecursive());
+		
 		return writeEvalContext;
 	}
 
@@ -158,6 +167,9 @@ public final class SitesSupport extends BaseRegionFunction
 	public BitSet readsEvalContextRecursive()
 	{
 		final BitSet readEvalContext = new BitSet();
+		if (locnFn != null)
+			readEvalContext.or(locnFn.readsEvalContextRecursive());
+		
 		return readEvalContext;
 	}
 
@@ -165,6 +177,8 @@ public final class SitesSupport extends BaseRegionFunction
 	public boolean missingRequirement(final Game game)
 	{
 		boolean missingRequirement = false;
+		if (locnFn != null)
+			missingRequirement |= locnFn.missingRequirement(game);
 		return missingRequirement;
 	}
 
@@ -172,6 +186,8 @@ public final class SitesSupport extends BaseRegionFunction
 	public boolean willCrash(final Game game)
 	{
 		boolean willCrash = false;
+		if (locnFn != null)
+			willCrash |= locnFn.willCrash(game);
 		return willCrash;
 	}
 
@@ -179,12 +195,14 @@ public final class SitesSupport extends BaseRegionFunction
 	public void preprocess(final Game game)
 	{
 		type = SiteType.use(type, game);
+		if (locnFn != null)
+			locnFn.preprocess(game);
 	}
 	
 	@Override
 	public String toEnglish(final Game game) 
 	{
-		return "free " + type.name();
+		return "support " + type.name();
 	}
 
 }

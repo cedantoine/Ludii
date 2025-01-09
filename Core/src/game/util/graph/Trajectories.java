@@ -789,14 +789,12 @@ public class Trajectories
 						bestAbsTanDiff = absTanDiff;
 						bestsNextTo = new ArrayList<GraphElement>();
 						bestsNextTo.add(nextTo);
-						if (bestAbsTanDiff == 0.0) {  //&& current.pt().z() == nextTo.pt().z()) {  // 
-//							System.out.println("I arrived here");
+						if (bestAbsTanDiff == 0.0) {  //&& current.pt().z() == nextTo.pt().z()) {  -> to use for Sploof
 							break;
 						}
 					}
 					else if (absTanDiff == bestAbsTanDiff)
 					{
-//						System.out.println("I ALSSOO arrived here");
 						bestsNextTo.add(nextTo);
 					}
 				}

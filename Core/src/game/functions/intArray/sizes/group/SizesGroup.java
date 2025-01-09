@@ -73,7 +73,7 @@ public final class SizesGroup extends BaseIntArrayFunction
 	 * @param of         The index of the player.
 	 * @param If         The condition on the pieces to include in the group.
 	 * @param min        Minimum size of each group [0].
-	 * @param isVisible  If all items of group have to be visible
+	 * @param isVisible  If all items of group have to be visible and visibly connected.
 	 */
 	public SizesGroup
 	(       
@@ -83,7 +83,7 @@ public final class SizesGroup extends BaseIntArrayFunction
 			@Opt @Or  @Name final IntFunction       of,
 			@Opt @Or  @Name final BooleanFunction   If,
 			@Opt      @Name final IntFunction       min,
-			@Opt 	  @Name final BooleanFunction isVisible
+			@Opt 	  @Name final BooleanFunction 	isVisible
 	)
 	{
 
@@ -314,6 +314,8 @@ public final class SizesGroup extends BaseIntArrayFunction
 		long gameFlags = whoFn.gameFlags(game) | minFn.gameFlags(game);
 		if (condition != null)
 			gameFlags |= condition.gameFlags(game);
+		if (isVisibleFn != null)
+			gameFlags |= isVisibleFn.gameFlags(game);
 		gameFlags |= SiteType.gameFlags(type);
 		return gameFlags;
 	}
@@ -328,6 +330,8 @@ public final class SizesGroup extends BaseIntArrayFunction
 		concepts.set(Concept.Group.id(), true);
 		if (condition != null)
 			concepts.or(condition.concepts(game));
+		if (isVisibleFn != null)
+			concepts.or(isVisibleFn.concepts(game));
 		if (dirnChoice != null)
 			concepts.or(dirnChoice.concepts(game));
 		return concepts;
@@ -343,6 +347,8 @@ public final class SizesGroup extends BaseIntArrayFunction
 			writeEvalContext.or(condition.writesEvalContextRecursive());
 		if (dirnChoice != null)
 			writeEvalContext.or(dirnChoice.writesEvalContextRecursive());
+		if (isVisibleFn != null)
+			writeEvalContext.or(isVisibleFn.writesEvalContextRecursive());
 		return writeEvalContext;
 	}
 	
@@ -365,6 +371,8 @@ public final class SizesGroup extends BaseIntArrayFunction
 			readEvalContext.or(condition.readsEvalContextRecursive());
 		if (dirnChoice != null)
 			readEvalContext.or(dirnChoice.readsEvalContextRecursive());
+		if (isVisibleFn != null)
+			readEvalContext.or(isVisibleFn.readsEvalContextRecursive());
 		return readEvalContext;
 	}
 
@@ -376,6 +384,8 @@ public final class SizesGroup extends BaseIntArrayFunction
 		minFn.preprocess(game);
 		if (condition != null)
 			condition.preprocess(game);
+		if (isVisibleFn != null)
+			isVisibleFn.preprocess(game);
 	}
 
 	@Override
@@ -386,6 +396,8 @@ public final class SizesGroup extends BaseIntArrayFunction
 		missingRequirement |= minFn.missingRequirement(game);
 		if (condition != null)
 			missingRequirement |= condition.missingRequirement(game);
+		if (isVisibleFn != null)
+			missingRequirement |= isVisibleFn.missingRequirement(game);
 		return missingRequirement;
 	}
 
@@ -397,6 +409,8 @@ public final class SizesGroup extends BaseIntArrayFunction
 		willCrash |= minFn.willCrash(game);
 		if (condition != null)
 			willCrash |= condition.willCrash(game);
+		if (isVisibleFn != null)
+			willCrash |= isVisibleFn.willCrash(game);
 		return willCrash;
 	}
 	
